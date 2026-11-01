@@ -14,6 +14,11 @@ from pygments import highlight
 from pygments.lexers import get_lexer_by_name, TextLexer
 from pygments.formatters import HtmlFormatter
 notes=json.loads((ROOT/'scripts/book-notes.json').read_text())
+icons=json.loads((ROOT/'scripts/icons.json').read_text())
+chapter_icons=['book','workflow','compare','layers','data','terminal','webhook','filter','api','fingerprint','retry','branch','server','globe','shield','queue','chart','restore','brain','search','approval','support','check','bug','route','rocket']
+def icon(name, color='#167e83'):
+    return f'<svg class="book-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="{color}" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{icons[name]}</svg>'
+
 headings=[]
 subheadings={}
 fa=lambda value:str(value).translate(str.maketrans('0123456789','۰۱۲۳۴۵۶۷۸۹'))
@@ -33,21 +38,21 @@ for i in range(1,len(parts),2):
         prefix=f'<span class="sub-number">{fa(number)}.{fa(index)}</span> ' if number<=26 else ''
         return f'<h3 id="{anchor}">{prefix}{label}</h3>'
     body=re.sub(r'<h3>(.*?)</h3>',anchor_subheading,body)
-    body=re.sub(r'(<h4>.*?</h4>)\s*(<p>.*?</p>)',r'<div class="interview-card">\1\2</div>',body,flags=re.S)
+    body=re.sub(r'(<h4>.*?</h4>)\s*(<p>.*?</p>)',lambda m:'<div class="interview-card"><div class="interview-mark">'+icon('message')+'<span>تحلیل / مصاحبه</span></div>'+m.group(1)+m.group(2)+'</div>',body,flags=re.S)
     clean=re.sub(r'^[۰-۹0-9]+[.\s]+','',title)
     if number<=26:
         note=notes[number-1]
         group=next(label for limit,label in groups if number<=limit)
         goals=''.join('<li>'+escape(g)+'</li>' for g in note['goals'])
-        density=""
-        opening=f'<section class="page-chapter{density}"><div class="chapter-kicker"><b>{number:02d}</b><span>{group}</span></div><h2 class="chapter" id="{key}">{clean}</h2><div class="objectives"><strong>هدف‌های یادگیری این فصل</strong><ul>{goals}</ul></div>'
+        density=" flow-fit" if number in [3,5,6,9,20,21,23] else ""
+        opening=f'<section class="page-chapter{density}"><div class="chapter-kicker"><span class="chapter-icon">{icon(chapter_icons[number-1])}</span><div><span>{group}</span><b>فصل {fa(number)}</b></div></div><h2 class="chapter" id="{key}">{clean}</h2><div class="objectives"><strong>{icon("target")} هدف‌های یادگیری این فصل</strong><ul>{goals}</ul></div>'
         if number in figures:
             name,caption=figures[number]
             figure=f'<figure class="technical-figure"><img src="docs/figures/{name}.png" alt="{caption}"><figcaption>تصویر {number} · {caption}</figcaption></figure>'
             # Keep the figure near the opening, before the next major content block.
             position=body.find('</p>')+4
             body=body[:position]+figure+body[position:]
-        ending=f'<div class="exercise"><div class="exercise-label">تمرین و کنترل</div><p>{escape(note["task"])}</p><p class="acceptance"><b>معیار پذیرش:</b> {escape(note["check"])}</p></div></section>'
+        ending=f'<div class="exercise"><div class="exercise-label">{icon("experiment")} تمرین و کنترل</div><p>{escape(note["task"])}</p><p class="acceptance"><b>معیار پذیرش:</b> {escape(note["check"])}</p></div></section>'
     else:
         opening=f'<section class="reference-page"><h2 class="chapter" id="{key}">{clean}</h2>'
         ending='</section>'
@@ -77,7 +82,7 @@ for page_index,(group_number,group_title,summary,start,end) in enumerate(toc_gro
     extras=''
     if page_index==5:
         extras='<div class="toc-extras">'+''.join(f'<a class="toc-row" href="#{key}"><span class="toc-title">{title}</span></a>' for key,title in headings[26:])+'</div>'
-    toc_pages.append(f'<section class="contents"><div class="toc-top"><p class="overline">CONTENTS / {group_number}</p><span>فصل، زیربخش و صفحهٔ دقیق</span></div><h1>فهرست تفصیلی</h1><div class="toc-group-heading"><b>{fa(group_number)}</b><div><h2>{group_title}</h2><p>{summary}</p></div></div>'+''.join(cards)+extras+'</section>')
+    toc_pages.append(f'<section class="contents" id="contents-{group_number}"><div class="toc-top"><p class="overline">CONTENTS / {group_number}</p><span>فصل، زیربخش و صفحهٔ دقیق</span></div><h1>فهرست تفصیلی</h1><div class="toc-group-heading"><b>{icon(chapter_icons[start-1])}<span>{fa(group_number)}</span></b><div><h2>{group_title}</h2><p>{summary}</p></div></div>'+''.join(cards)+extras+'</section>')
 toc=''.join(toc_pages)
 css=(ROOT/'scripts/book.css').read_text()+'\n'+formatter.get_style_defs('.code-window')
 html='''<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
@@ -123,8 +128,8 @@ destinations={link.get('nameddest'):link.get('page') for page in pdf for link in
 samples=[0,2,destinations['chapter-13']]
 for index,name in zip(samples,['cover','sample-01','sample-02']):
     pdf[index].get_pixmap(matrix=fitz.Matrix(1.5,1.5)).save(previews/f'{name}.png')
-layout_files=['scripts/build_pdf.py','scripts/book.css','scripts/book-notes.json','scripts/build_figures.py','docs/assets/cover-art.webp','docs/assets/author.webp']
+layout_files=['scripts/build_pdf.py','scripts/book.css','scripts/book-notes.json','scripts/build_figures.py','docs/assets/cover-art.webp','docs/assets/author.webp','scripts/icons.json']
 layout_hash=hashlib.sha256(b''.join((ROOT/f).read_bytes() for f in layout_files)).hexdigest()
-meta={'pages':len(pdf),'bytes':output.stat().st_size,'edition':'2026-11-01','sample_pages':[x+1 for x in samples],'source_sha256':hashlib.sha256((ROOT/'guide.md').read_bytes()).hexdigest(),'layout_sha256':layout_hash,'chapter_pages':[destinations[f'chapter-{n}']+1 for n in range(1,len(headings)+1)],'illustrations':6,'chapters':26,'interview_questions':76,'source_words':len(source.split()),'projects':3,'toc_pages':len(toc_pages),'motion_version':'14.9.0'}
+meta={'pages':len(pdf),'bytes':output.stat().st_size,'edition':'2026-11-01','sample_pages':[x+1 for x in samples],'source_sha256':hashlib.sha256((ROOT/'guide.md').read_bytes()).hexdigest(),'layout_sha256':layout_hash,'chapter_pages':[destinations[f'chapter-{n}']+1 for n in range(1,len(headings)+1)],'illustrations':6,'chapters':26,'interview_questions':76,'source_words':len(source.split()),'projects':3,'toc_pages':destinations['chapter-1']-2,'icons':len(icons),'chapter_icons':26,'pdf_icons':29,'motion_version':'14.9.0'}
 (ROOT/'docs/assets/book-meta.json').write_text(json.dumps(meta,indent=2)+'\n')
 print(f'PDF: {len(pdf)} pages, {len(pdf.get_toc())} bookmarks, previews generated.')

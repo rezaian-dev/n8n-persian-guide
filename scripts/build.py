@@ -5,6 +5,10 @@ import markdown
 ROOT=Path(__file__).resolve().parents[1]
 meta=json.loads((ROOT/'docs/assets/book-meta.json').read_text())
 source=(ROOT/'guide.md').read_text()
+icons=json.loads((ROOT/'scripts/icons.json').read_text())
+def ui_icon(name):
+    return f'<svg class="ui-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">{icons[name]}</svg>'
+
 titles=re.findall(r'<h2>(.*?)</h2>',markdown.markdown(source,extensions=['tables','fenced_code']))[:26]
 fa=lambda value:str(value).translate(str.maketrans('0123456789','۰۱۲۳۴۵۶۷۸۹'))
 groups=[('01','مبانی و مدل ذهنی','بخش‌های ۱ تا ۵',1,5),('02','اولین گردش‌کار واقعی','بخش‌های ۶ تا ۹',6,9),('03','اعتمادپذیری و اثر جانبی','بخش‌های ۱۰ تا ۱۲',10,12),('04','استقرار و عملیات','بخش‌های ۱۳ تا ۱۸',13,18),('05','هوش مصنوعی کنترل‌شده','بخش‌های ۱۹ تا ۲۲',19,22),('06','تست، عیب‌یابی و انتشار','بخش‌های ۲۳ تا ۲۶',23,26)]
@@ -14,6 +18,7 @@ for number,title,subtitle,start,end in groups:
     modules.append(f'<details class="module"><summary><span class="module-number">{number}</span><span><b>{title}</b><small>{subtitle}</small></span><i aria-hidden="true">+</i></summary><ol>{links}</ol></details>')
 landing=(ROOT/'scripts/landing.html').read_text()
 values={'MODULES':''.join(modules),'PAGES_EN':str(meta['pages']),'PAGES_FA':fa(meta['pages']),'SIZE':fa(f"{meta['bytes']/1048576:.2f}"),'APPENDIX':str(meta['chapter_pages'][26]),'APPENDIX_FA':fa(meta['chapter_pages'][26]),'SAMPLE1':str(meta['sample_pages'][1]),'SAMPLE2':str(meta['sample_pages'][2])}
+values.update({'ICON_'+name.upper():ui_icon(name) for name in icons})
 for key,value in values.items():landing=landing.replace('{{'+key+'}}',value)
 (ROOT/'docs/index.html').write_text(landing)
 assert '{{' not in landing, 'Unresolved template variable'

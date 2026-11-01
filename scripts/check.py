@@ -38,3 +38,8 @@ landing=(ROOT/'docs/index.html').read_text()
 assert 'cover-3d' not in landing
 assert all(f'id="{key}"' in landing for key in ['chapter-search','page-preview','mobile-download'])
 print('Flat-cover, progressive-enhancement and Linguist configuration checks passed.')
+
+assert all(f'id="{key}"' in landing for key in ['primary-nav','menu-toggle','footer'])
+assert 'site-footer' in landing and 'site-header' in landing
+assert '*.py linguist-detectable=false linguist-generated=true linguist-vendored=true' in attributes
+print('Responsive shell and Python-exclusion rules verified.')

@@ -1,6 +1,6 @@
 # The language bar represents the reader-facing website, not publication tooling.
 # Keep all build scripts and learning labs usable; only exclude their statistics.
-*.py linguist-detectable=false
+*.py linguist-detectable=false linguist-generated=true linguist-vendored=true
 *.yaml linguist-detectable=false
 *.yml linguist-detectable=false
 *.toml linguist-detectable=false
@@ -16,3 +16,7 @@ docs/assets/vendor/** linguist-vendored=true
 docs/index.html linguist-generated=false
 docs/assets/landing.css linguist-generated=false
 docs/assets/landing.js linguist-generated=false
+
+# Source-of-publication files are necessary tooling, not the website implementation.
+scripts/** linguist-detectable=false
+.github/** linguist-detectable=false

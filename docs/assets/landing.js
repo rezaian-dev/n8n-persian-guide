@@ -1,9 +1,43 @@
 /* Motion 14.9.0, locally bundled under MIT. No CDN or tracking. */
 (() => {
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const themeButton=document.querySelector('#theme');
+ const syncTheme=()=>{
+  const dark=document.documentElement.dataset.theme==='dark';
+  themeButton?.setAttribute('aria-pressed',String(dark));
+  themeButton?.setAttribute('aria-label',dark?'فعال‌کردن تم روشن':'فعال‌کردن تم تیره');
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#0b1725':'#f7f7f2');
+ };
+ syncTheme();
+ const header=document.querySelector('.site-header');
+ const menu=document.querySelector('#menu-toggle');
+ const nav=document.querySelector('#primary-nav');
+ const small=matchMedia('(max-width:900px)');
+ let menuOpen=false;
+ const syncMenu=()=>{
+  nav.hidden=small.matches&&!menuOpen;
+  menu.setAttribute('aria-expanded',String(small.matches&&menuOpen));
+  menu.setAttribute('aria-label',menuOpen?'بستن منو':'بازکردن منو');
+ };
+ if(header&&menu&&nav){
+  header.classList.add('enhanced');menu.hidden=false;syncMenu();
+  menu.addEventListener('click',()=>{menuOpen=!menuOpen;syncMenu()});
+  small.addEventListener('change',()=>{menuOpen=false;syncMenu()});
+  nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menuOpen=false;syncMenu()}));
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuOpen){menuOpen=false;syncMenu();menu.focus()}});
+  document.addEventListener('click',e=>{if(menuOpen&&!header.contains(e.target)){menuOpen=false;syncMenu()}});
+  const links=[...nav.querySelectorAll('a')];
+  const observer=new IntersectionObserver(entries=>{
+   const entry=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+   if(!entry)return;
+   links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')});
+  },{rootMargin:'-15% 0px -60% 0px',threshold:0});
+  links.forEach(link=>{const target=document.querySelector(link.hash);if(target)observer.observe(target)});
+ }
+
  document.querySelector('#theme')?.addEventListener('click',()=>{
   const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';
-  document.documentElement.dataset.theme=theme;
+  document.documentElement.dataset.theme=theme;syncTheme();
   try{localStorage.setItem('n8n-guide-theme',theme)}catch{}
  });
  const progress=document.querySelector('#reading-progress');

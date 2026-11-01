@@ -10,7 +10,7 @@
 
 [**Download the PDF**](docs/N8N-Persian-Guide.pdf) · [**Explore the book website**](https://rezaian-dev.github.io/n8n-persian-guide/) · [**Read the source**](guide.md)
 
-**71 designed A4 pages · 26 chapters · 76 answered interview questions · 3 projects/labs · 34 independent tests**
+**74 designed A4 pages · 26 chapters · 76 answered interview questions · 3 projects/labs · 34 independent tests**
 
 </div>
 
@@ -18,13 +18,13 @@
 
 An expanded, project-based Persian reference to n8n: data and expressions, webhooks, API integration, input validation, idempotency, error handling, deployment, security, observability, recovery, and controlled AI workflows.
 
-The **PDF is the primary deliverable**. Its editorial layout is inspired by the author's [TypeScript Persian Guide](https://github.com/rezaian-dev/typescript-persian-guide): independent chapter openings, learning objectives, navy-and-gold accents, syntax-highlighted code frames, exercises, acceptance checks, a six-page hierarchical table of contents with chapter/subsection numbering and automatic page destinations (no row rules or dotted leaders), and 197 PDF bookmarks.
+The **PDF is the primary deliverable**. Its editorial layout is inspired by the author's [TypeScript Persian Guide](https://github.com/rezaian-dev/typescript-persian-guide): independent chapter openings, learning objectives, navy-and-gold accents, syntax-highlighted code frames, exercises, acceptance checks, a six-page hierarchical table of contents with chapter/subsection numbering and automatic page destinations (no row rules or dotted leaders), and 197 PDF bookmarks. The contents now uses 12pt chapter titles, 10.8pt subsection titles and clear page numbers, rather than miniature type. Twenty-six topic-specific vector chapter icons and semantic objective, interview and exercise icons are typeset directly into the PDF; no emoji fonts or remote icon service is used.
 
 The cover is entirely flat: an AI-generated conceptual automation illustration, searchable typeset title/author text, and the original author portrait are separate elements. There is no 3D book mockup, perspective transform or generated portrait. The website presents the same conceptual art without tilting; real PDF previews remain separate.
 
 The website is a **book introduction and download page**, not a duplicate full-text reader. It features real PDF previews, chapter-to-PDF links, a responsive book presentation, and locally bundled **Motion 14.9.0** animations. Reduced-motion preferences are respected. No CDN, analytics, tracking, or runtime framework is required.
 
-The reference-edition website adds a flat editorial hero, three selectable reading paths, client-side chapter search with Persian/Arabic character normalization, keyboard-accessible large-page previews, an interview sample, and a mobile download strip. Core downloads and native contents still work without JavaScript. Desktop, mobile (including 320px), reduced-motion and no-JavaScript paths were checked.
+The reference-edition website uses a coordinated deep-navy, sea-glass teal and champagne palette, a framed sticky header with an accessible mobile disclosure menu, and a multi-column footer with author, reading, code and source navigation. It adds a flat editorial hero, three selectable reading paths, client-side chapter search with Persian/Arabic character normalization, keyboard-accessible large-page previews, an interview sample, and a mobile download strip. Core downloads and native contents still work without JavaScript. Desktop, mobile (including 320px), reduced-motion and no-JavaScript paths were checked.
 
 **Documentation reviewed:** November 1, 2026. **Example baseline:** n8n 2.45.7. These are dated references, not a claim that this version will always be current.
 
@@ -122,7 +122,7 @@ There is one distributed PDF and no duplicate HTML reader, duplicate deployment 
 
 ## Repository language statistics
 
-`.gitattributes` keeps the GitHub Languages bar focused on the reader-facing **HTML, CSS and JavaScript**. Python publication scripts, isolated learning labs, tests, deployment configuration and build-only templates are excluded from language detection. Bundled Motion is marked as third-party vendored code. These settings do not rename, delete or convert any source files. GitHub recomputes the bar after the attributes reach the default branch; its cached display may take time to refresh.
+`.gitattributes` keeps the GitHub Languages bar focused on the reader-facing **HTML, CSS and JavaScript**. Python files are explicitly non-detectable, generated and vendored for Linguist statistics. Publication scripts, isolated learning labs, tests, deployment configuration and build-only templates are excluded from language detection. Bundled Motion is marked as third-party vendored code. These settings do not rename, delete or convert any source files. GitHub recomputes the bar after the attributes reach the default branch; its cached display may take time to refresh.
 
 ## Publishing
 
