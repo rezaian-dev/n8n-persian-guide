@@ -1,14 +1,14 @@
 {
   "pages": 35,
-  "bytes": 1268548,
+  "bytes": 1257348,
   "edition": "2026-11-01",
   "sample_pages": [
     1,
-    11,
+    3,
     19
   ],
   "source_sha256": "b176f641013ae13e049cf0f72d75f34a19ad020add1b4f32433fc01b49b1641f",
-  "layout_sha256": "6bac69d9569bf0671b3e2f42493b18cf9f58cd550fc4b085bb2bf5e7a2f74559",
+  "layout_sha256": "bea781d7d912b777bf8002b8f25ad3d757d65462a587dcf5e3a5da0af168f2b8",
   "chapter_pages": [
     5,
     6,

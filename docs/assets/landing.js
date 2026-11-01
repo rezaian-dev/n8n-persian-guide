@@ -53,9 +53,9 @@
    const rect=art.getBoundingClientRect();
    const x=(e.clientX-rect.left)/rect.width-.5;
    const y=(e.clientY-rect.top)/rect.height-.5;
-   play(book,{rotateY:9+x*9,rotateX:-y*5,rotateZ:-3},{duration:.35,ease:'easeOut'});
+   play(book,{rotateY:x*4,rotateX:-y*3,rotateZ:0},{duration:.35,ease:'easeOut'});
   });
-  art.addEventListener('pointerleave',()=>play(book,{rotateY:9,rotateX:0,rotateZ:-3},{duration:.6,ease:'easeOut'}));
+  art.addEventListener('pointerleave',()=>play(book,{rotateY:0,rotateX:0,rotateZ:0},{duration:.6,ease:'easeOut'}));
  }
  reduced.addEventListener('change',e=>{
   if(!e.matches)return;

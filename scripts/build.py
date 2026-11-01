@@ -10,7 +10,7 @@ fa=lambda value:str(value).translate(str.maketrans('0123456789','۰۱۲۳۴۵۶�
 groups=[('01','مبانی و مدل ذهنی','بخش‌های ۱ تا ۵',1,5),('02','اولین گردش‌کار واقعی','بخش‌های ۶ تا ۹',6,9),('03','اعتمادپذیری و اثر جانبی','بخش‌های ۱۰ تا ۱۲',10,12),('04','استقرار و عملیات','بخش‌های ۱۳ تا ۱۸',13,18),('05','هوش مصنوعی کنترل‌شده','بخش‌های ۱۹ تا ۲۲',19,22),('06','تست، عیب‌یابی و انتشار','بخش‌های ۲۳ تا ۲۶',23,26)]
 modules=[]
 for number,title,subtitle,start,end in groups:
-    links=''.join(f'<li><a href="N8N-Persian-Guide.pdf#page={meta["chapter_pages"][i-1]}" target="_blank" rel="noopener">{titles[i-1]}</a></li>' for i in range(start,end+1))
+    links=''.join(f'<li><a class="chapter-link" href="N8N-Persian-Guide.pdf#page={meta["chapter_pages"][i-1]}" target="_blank" rel="noopener"><span class="chapter-number">{fa(f"{i:02d}")}</span><span>{re.sub(r"^[۰-۹0-9]+[.\s]+", "", titles[i-1])}</span><small>ص. {fa(meta["chapter_pages"][i-1])}</small></a></li>' for i in range(start,end+1))
     modules.append(f'<details class="module"><summary><span class="module-number">{number}</span><span><b>{title}</b><small>{subtitle}</small></span><i aria-hidden="true">+</i></summary><ol>{links}</ol></details>')
 landing=(ROOT/'scripts/landing.html').read_text()
 values={'MODULES':''.join(modules),'PAGES_EN':str(meta['pages']),'PAGES_FA':fa(meta['pages']),'SIZE':fa(f"{meta['bytes']/1048576:.2f}"),'SAMPLE1':str(meta['sample_pages'][1]),'SAMPLE2':str(meta['sample_pages'][2])}

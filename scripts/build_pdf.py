@@ -50,7 +50,24 @@ def code_frame(match):
     label=escape(language.upper())
     return f'<div class="code-window"><div class="code-toolbar"><span class="traffic"><i></i><i></i><i></i></span><b>{label} / EXAMPLE</b><small>نمونهٔ آموزشی</small></div><pre>{colored}</pre></div>'
 content=re.sub(r'<pre><code(?: class="language-([^" ]+)")?>(.*?)</code></pre>',code_frame,content,flags=re.S)
-toc=''.join(f'<li><a href="#{key}">{title}</a></li>' for key,title in headings)
+fa=lambda value:str(value).translate(str.maketrans('0123456789','۰۱۲۳۴۵۶۷۸۹'))
+toc_groups=[('01','مبانی و مدل ذهنی','پیش از ساختن، مسئله و داده را بشناسید.',1,5),('02','اولین گردش‌کار','از یک ورودی ساده تا اتصال API.',6,9),('03','اعتمادپذیری','تکرار، خطا و اثر جانبی را کنترل کنید.',10,12),('04','استقرار و عملیات','از محیط محلی تا زیرساخت قابل‌بازیابی.',13,18),('05','هوش مصنوعی کنترل‌شده','مدل، بازیابی سند و اختیار انسان.',19,22),('06','آزمون و انتشار','کیفیت را با شواهد نشان دهید.',23,26)]
+toc_pages=[]
+for page_index in range(2):
+    cards=[]
+    for group_number,group_title,summary,start,end in toc_groups[page_index*3:page_index*3+3]:
+        rows=[]
+        for n in range(start,end+1):
+            key,title=headings[n-1]
+            clean=re.sub(r'^[۰-۹0-9]+[.\s]+','',title)
+            rows.append(f'<a class="toc-row" href="#{key}"><span class="toc-index">{fa(f"{n:02d}")}</span><span class="toc-title">{clean}</span></a>')
+        cards.append(f'<div class="toc-group"><div class="toc-group-heading"><b>{fa(group_number)}</b><div><h2>{group_title}</h2><p>{summary}</p></div></div><div class="toc-rows">'+''.join(rows)+'</div></div>')
+    extras=''
+    if page_index==1:
+        extras='<div class="toc-extras">'+''.join(f'<a href="#{key}">{title}</a>' for key,title in headings[26:])+'</div>'
+    continuation=' / ادامه' if page_index else ''
+    toc_pages.append(f'<section class="contents"><div class="toc-top"><p class="overline">THE READING MAP / {page_index+1:02d}</p><span>۲۶ فصل · ۶ مسیر یادگیری</span></div><h1>فهرست مطالب{continuation}</h1><p class="toc-intro">یک مسیر روشن، از فهم مسئله تا ساختن یک سیستم قابل‌اعتماد.</p>'+''.join(cards)+extras+'</section>')
+toc=''.join(toc_pages)
 css=(ROOT/'scripts/book.css').read_text()+'\n'+formatter.get_style_defs('.code-window')
 html='''<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
 <title>راهنمای جامع و کاربردی n8n — محمدرضا رضائیان</title>
@@ -78,7 +95,7 @@ html='''<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
  <p>این اثر با کمک ابزارهای پژوهش و نگارش هوش مصنوعی تهیه شده است. تاریخ بررسی منابع و حدود آزمون شفاف‌اند. این راهنما محصول رسمی یا مورد تأیید n8n نیست. نام‌ها و علائم تجاری متعلق به صاحبانشان‌اند.</p>
  <p class="small">© ۲۰۲۶ محمدرضا رضائیان. همهٔ حقوق محفوظ است. عکس نویسنده با اجازهٔ صاحب حساب استفاده شده است. فونت Vazirmatn با مجوز SIL OFL به‌کار رفته است. مجوز n8n مستقل از این مقاله است.</p>
 </section>
-<section class="contents"><p class="overline">READING MAP</p><h1>فهرست مطالب</h1><p class="muted">از مسیر کوتاه شروع کنید؛ هر بخش یک مسئلهٔ واقعی را باز می‌کند.</p><ol>'''+toc+'''</ol></section>
+'''+toc+'''
 <main>'''+content+'''</main>
 <section class="back-cover"><p class="overline">BUILD SMALL. BUILD RELIABLE.</p><h1>یک فرایند کوچک.<br>یک اثر واقعی.</h1><p>فایل گردش‌کار، مثال‌های کد و راهنمای استقرار را از مخزن دریافت کنید. برای گزارش خطا، شمارهٔ بخش و نسخهٔ نرم‌افزار را همراه با نمونهٔ پاک‌سازی‌شده ارسال کنید.</p><a class="ltr" href="https://github.com/rezaian-dev/n8n-persian-guide">github.com/rezaian-dev/n8n-persian-guide</a><div class="back-author"><img src="docs/assets/author.webp" alt="محمدرضا رضائیان"><h2>محمدرضا رضائیان</h2><p>React · Next.js · TypeScript</p><a href="https://rezaian-dev.vercel.app/fa">rezaian-dev.vercel.app</a></div></section>
 </body></html>'''
@@ -92,7 +109,7 @@ pdf=fitz.open(output)
 previews=ROOT/'docs/previews'
 previews.mkdir(exist_ok=True)
 destinations={link.get('nameddest'):link.get('page') for page in pdf for link in page.get_links() if link.get('nameddest')}
-samples=[0,destinations['chapter-7'],destinations['chapter-13']]
+samples=[0,2,destinations['chapter-13']]
 for index,name in zip(samples,['cover','sample-01','sample-02']):
     pdf[index].get_pixmap(matrix=fitz.Matrix(1.5,1.5)).save(previews/f'{name}.png')
 layout_files=['scripts/build_pdf.py','scripts/book.css','scripts/book-notes.json','scripts/build_figures.py']

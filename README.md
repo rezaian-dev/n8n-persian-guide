@@ -18,7 +18,9 @@
 
 A practical Persian-language guide to n8n: data and expressions, webhooks, API integration, input validation, idempotency, error handling, deployment, security, observability, recovery, and controlled AI workflows.
 
-The **PDF is the primary deliverable**. Its editorial layout is inspired by the author's [TypeScript Persian Guide](https://github.com/rezaian-dev/typescript-persian-guide): independent chapter openings, learning objectives, navy-and-gold accents, syntax-highlighted code frames, exercises, acceptance checks, clickable contents, and PDF bookmarks.
+The **PDF is the primary deliverable**. Its editorial layout is inspired by the author's [TypeScript Persian Guide](https://github.com/rezaian-dev/typescript-persian-guide): independent chapter openings, learning objectives, navy-and-gold accents, syntax-highlighted code frames, exercises, acceptance checks, a grouped two-page reading map without row rules or dotted leaders, and PDF bookmarks.
+
+The website uses a studio-style 3D cover mockup: an AI-generated product scene composited with the original cover artwork to preserve the exact typography and author portrait. The real PDF previews remain separate.
 
 The website is a **book introduction and download page**, not a duplicate full-text reader. It features real PDF previews, chapter-to-PDF links, a responsive book presentation, and locally bundled **Motion 14.9.0** animations. Reduced-motion preferences are respected. No CDN, analytics, tracking, or runtime framework is required.
 
