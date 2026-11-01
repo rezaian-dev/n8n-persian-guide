@@ -45,18 +45,6 @@
  document.querySelectorAll('.module').forEach(el=>el.addEventListener('toggle',()=>{
   if(el.open&&!reduced.matches)play(el.querySelector('ol'),{opacity:[0,1],y:[-7,0]},{duration:.3});
  }));
- const book=document.querySelector('.book-stage');
- const art=document.querySelector('.hero-art');
- if(book&&art&&matchMedia('(hover:hover) and (pointer:fine)').matches){
-  art.addEventListener('pointermove',e=>{
-   if(reduced.matches)return;
-   const rect=art.getBoundingClientRect();
-   const x=(e.clientX-rect.left)/rect.width-.5;
-   const y=(e.clientY-rect.top)/rect.height-.5;
-   play(book,{rotateY:x*4,rotateX:-y*3,rotateZ:0},{duration:.35,ease:'easeOut'});
-  });
-  art.addEventListener('pointerleave',()=>play(book,{rotateY:0,rotateX:0,rotateZ:0},{duration:.6,ease:'easeOut'}));
- }
  reduced.addEventListener('change',e=>{
   if(!e.matches)return;
   active.forEach(control=>control.stop());active.clear();

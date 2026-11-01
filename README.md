@@ -10,17 +10,17 @@
 
 [**Download the PDF**](docs/N8N-Persian-Guide.pdf) · [**Explore the book website**](https://rezaian-dev.github.io/n8n-persian-guide/) · [**Read the source**](guide.md)
 
-**35 designed A4 pages · 26 chapters · 6 original technical illustrations · 10 independent tests**
+**71 designed A4 pages · 26 chapters · 76 answered interview questions · 3 projects/labs · 34 independent tests**
 
 </div>
 
 ## What this repository contains
 
-A practical Persian-language guide to n8n: data and expressions, webhooks, API integration, input validation, idempotency, error handling, deployment, security, observability, recovery, and controlled AI workflows.
+An expanded, project-based Persian reference to n8n: data and expressions, webhooks, API integration, input validation, idempotency, error handling, deployment, security, observability, recovery, and controlled AI workflows.
 
-The **PDF is the primary deliverable**. Its editorial layout is inspired by the author's [TypeScript Persian Guide](https://github.com/rezaian-dev/typescript-persian-guide): independent chapter openings, learning objectives, navy-and-gold accents, syntax-highlighted code frames, exercises, acceptance checks, a grouped two-page reading map without row rules or dotted leaders, and PDF bookmarks.
+The **PDF is the primary deliverable**. Its editorial layout is inspired by the author's [TypeScript Persian Guide](https://github.com/rezaian-dev/typescript-persian-guide): independent chapter openings, learning objectives, navy-and-gold accents, syntax-highlighted code frames, exercises, acceptance checks, a six-page hierarchical table of contents with chapter/subsection numbering and automatic page destinations (no row rules or dotted leaders), and 197 PDF bookmarks.
 
-The website uses a studio-style 3D cover mockup: an AI-generated product scene composited with the original cover artwork to preserve the exact typography and author portrait. The real PDF previews remain separate.
+The cover is entirely flat: an AI-generated conceptual automation illustration, searchable typeset title/author text, and the original author portrait are separate elements. There is no 3D book mockup, perspective transform or generated portrait. The website presents the same conceptual art without tilting; real PDF previews remain separate.
 
 The website is a **book introduction and download page**, not a duplicate full-text reader. It features real PDF previews, chapter-to-PDF links, a responsive book presentation, and locally bundled **Motion 14.9.0** animations. Reduced-motion preferences are respected. No CDN, analytics, tracking, or runtime framework is required.
 
@@ -37,7 +37,9 @@ The website is a **book introduction and download page**, not a duplicate full-t
 | Controlled AI | Structured output, RAG, tool permissions, human approval |
 | Verification | Evaluation, troubleshooting, release checks, learning roadmap |
 
-The PDF adds chapter objectives and practical review exercises to the Markdown article. These editorial notes are maintained in `scripts/book-notes.json`.
+The expanded source contains mental models, worked examples, failure analyses, exercises, 52 chapter-specific interview questions and 24 additional scenario questions with analytical answers. The PDF adds chapter objectives and acceptance-check panels maintained in `scripts/book-notes.json`. Reading is not a promise of mastery: run the labs, explain failures, and transfer the ideas to new cases.
+
+The accompanying [independent labs](projects/README.md) cover transactional intake/outbox with lease ownership and strict AI output, document ACLs and approval binding. They deliberately do not pretend to be live n8n/provider integrations.
 
 ## Try the local example
 
@@ -62,6 +64,7 @@ Requires Python 3.10+, Node.js 20+, and the system libraries required by WeasyPr
 ```bash
 python -m pip install -r requirements.txt
 npm test
+python -m unittest discover -s tests -p 'test_*.py' -v
 python scripts/build_pdf.py
 python scripts/build.py
 python scripts/check.py
@@ -85,18 +88,20 @@ The distributed images are already included; normal reading, website hosting, an
 
 ## Verification and limitations
 
-- **10 independent Node.js tests** cover validation logic, item linkage, and workflow structure.
+- **22 Node.js tests** cover lead validation, item linkage, workflow structure, strict AI schemas, document eligibility, tool scope and approval binding.
+- **12 Python tests** cover atomic intake/outbox, concurrent duplicates, payload conflict, rollback, lease expiry, stale ownership, retry delay and restart persistence.
+- These **34 independent tests** do not execute the n8n runtime, Docker, a real AI model or external tools. A pure approval check is not an authenticated approval service or one-time execution guarantee.
 - PDF checks cover source/layout freshness, page metadata, searchable text, bookmarks, internal destinations, and text outside page bounds.
 - Website checks validate local assets and links. Desktop/mobile checks also exercised theme switching, contents expansion, and PDF downloads.
 - Motion effects were checked with normal and reduced-motion preferences. Motion and its MIT license are stored locally under `docs/assets/vendor/`.
 - PDF covers, representative pages, and a thumbnail overview were visually reviewed. This is not a complete human copyedit or a PDF/UA accessibility certification.
-- Full workflow import/execution inside n8n, Docker startup, external services, TLS, and backup restoration still require testing in the target environment. AI sections are implementation designs, not live connected agents.
+- Full workflow import/execution inside n8n, Docker startup, external services, TLS, load capacity, and backup restoration still require testing in the target environment. AI sections include tested isolated policy code and implementation designs, not live connected agents.
 
 ## Repository layout
 
 ```text
 .
-├── guide.md                       # Persian article source
+├── guide.md                       # Expanded Persian reference source
 ├── docs/
 │   ├── N8N-Persian-Guide.pdf       # Primary publication
 │   ├── index.html                 # Generated book landing page
@@ -105,7 +110,8 @@ The distributed images are already included; normal reading, website hosting, an
 │   └── previews/                  # Images rendered from the actual PDF
 ├── workflows/lead-intake.json      # Importable local demonstration
 ├── examples/normalize-lead.js      # Dependency-free validation logic
-├── tests/                         # Independent example tests
+├── projects/                      # Durable intake and AI boundary learning labs
+├── tests/                         # 22 Node.js + 12 Python independent tests
 ├── deploy/                        # Local/staging Compose and proxy example
 └── scripts/                       # Publication sources, builders, and checks
 ```

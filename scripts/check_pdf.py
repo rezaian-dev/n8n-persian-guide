@@ -1,6 +1,6 @@
 """Audit the distributed PDF. Requires PyMuPDF; does not claim semantic proofreading."""
 from pathlib import Path
-import json, hashlib
+import json, hashlib, re
 import fitz
 ROOT=Path(__file__).resolve().parents[1]
 meta=json.loads((ROOT/'docs/assets/book-meta.json').read_text())
@@ -8,12 +8,18 @@ file=ROOT/'docs/N8N-Persian-Guide.pdf';pdf=fitz.open(file)
 assert len(pdf)==meta['pages']
 assert file.stat().st_size==meta['bytes']
 assert hashlib.sha256((ROOT/'guide.md').read_bytes()).hexdigest()==meta['source_sha256'], 'PDF is stale relative to guide.md'
-layout_files=['scripts/build_pdf.py','scripts/book.css','scripts/book-notes.json','scripts/build_figures.py']
+layout_files=['scripts/build_pdf.py','scripts/book.css','scripts/book-notes.json','scripts/build_figures.py','docs/assets/cover-art.webp','docs/assets/author.webp']
 assert hashlib.sha256(b''.join((ROOT/f).read_bytes() for f in layout_files)).hexdigest()==meta['layout_sha256'], 'PDF layout sources have changed; rebuild the PDF'
-assert len(pdf.get_toc())>=28, 'Missing bookmarks'
+source=(ROOT/'guide.md').read_text()
+assert len(re.findall(r'^#### پرسش ',source,re.M))==52
+assert len(re.findall(r'^### سناریوی ',source,re.M))==24
+assert meta['interview_questions']==76 and meta['chapters']==26 and meta['projects']==3
+assert len(meta['chapter_pages'])==len(re.findall(r'^## ',source,re.M))
+assert meta['chapter_pages'][0]==meta['toc_pages']+3
+assert len(pdf.get_toc())>=190, 'Missing hierarchical bookmarks'
 assert all(len(page.get_text().strip())>30 for page in pdf), 'Empty or image-only page'
 internal=[link for page in pdf for link in page.get_links() if link.get('page',-1)>=0]
-assert len(internal)>=28
+assert len(internal)>=110
 assert all(link['page']<len(pdf) for link in internal)
 for i,page in enumerate(pdf):
  for block in page.get_text('dict')['blocks']:
