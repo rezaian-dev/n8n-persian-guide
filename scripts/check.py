@@ -13,14 +13,20 @@ class Check(HTMLParser):
   for key in ['src','href']:
    if key in a:self.refs.append(a[key])
   if tag=='img':assert a.get('alt'), 'Image missing alt';self.images+=1
-page=Check();page.feed((ROOT/'docs/index.html').read_text())
-for ref in page.refs:
- if ref.startswith('#'):
-  if ref!='#':assert ref[1:] in page.ids,f'Missing anchor: {ref}'
- elif not ref.startswith(('https:','http:','mailto:','data:')):
-  assert (ROOT/'docs'/ref).is_file(),f'Missing local asset: {ref}'
-assert page.images>=2
-for f in ['guide.md','README.md','SECURITY.md','LICENSE.md','deploy/.env.example','workflows/lead-intake.json']:
+
+for filename in ['index.html','reader.html']:
+ page=Check();page.feed((ROOT/'docs'/filename).read_text())
+ for ref in page.refs:
+  if ref.startswith('#'):
+   if ref!='#':assert ref[1:] in page.ids,f'Missing anchor: {ref}'
+  elif not ref.startswith(('https:','http:','mailto:','data:')):
+   path,_,fragment=ref.partition('#')
+   assert (ROOT/'docs'/path).is_file(),f'Missing local asset: {ref}'
+   if fragment and path.endswith('.html'):
+    other=Check();other.feed((ROOT/'docs'/path).read_text());assert fragment in other.ids,ref
+ assert page.images>=2
+ print(f'{filename}: {len(page.ids)} unique ids, {len(page.refs)} references checked.')
+for f in ['guide.md','README.md','SECURITY.md','LICENSE.md','deploy/.env.example','workflows/lead-intake.json','docs/N8N-Persian-Guide.pdf']:
  assert (ROOT/f).is_file(),f'Missing required file: {f}'
 json.loads((ROOT/'workflows/lead-intake.json').read_text())
-print(f'HTML checks passed: {len(page.ids)} unique ids, {len(page.refs)} references, {page.images} author images.')
+print('All local link and required-file checks passed.')

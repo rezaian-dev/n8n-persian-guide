@@ -16,8 +16,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: pip install -r requirements.txt
+      - run: pip install -r requirements.txt PyMuPDF==1.26.5
       - run: npm test
       - run: python scripts/build.py
       - run: python scripts/check.py
-      - run: git diff --exit-code -- docs/index.html
+      - run: python scripts/check_pdf.py
+      - run: git diff --exit-code -- docs/index.html docs/reader.html

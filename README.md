@@ -7,9 +7,9 @@
 
 **نویسنده و گردآورنده: محمدرضا رضائیان**
 
-[**🌐 مطالعه در سایت فارسی**](https://rezaian-dev.github.io/n8n-persian-guide/) · [**📖 متن کامل مقاله**](guide.md) · [**⚙️ گردش‌کار نمونه**](workflows/lead-intake.json)
+[**🌐 معرفی مقاله و دریافت PDF**](https://rezaian-dev.github.io/n8n-persian-guide/) · [**⬇️ دانلود مستقیم PDF**](docs/N8N-Persian-Guide.pdf) · [**📖 متن مقاله**](guide.md) · [**⚙️ گردش‌کار نمونه**](workflows/lead-intake.json)
 
-۲۶ بخش کاربردی · نمونهٔ JSON قابل واردکردن · ۱۰ تست مستقل · منابع رسمی
+**PDF فارسی ۲۴ صفحه‌ای** · ۲۶ بخش کاربردی · نمونهٔ JSON · ۱۰ تست مستقل
 
 </div>
 
@@ -53,8 +53,9 @@ docker compose -f deploy/compose.local.yaml up -d
 ```text
 .
 ├── guide.md                    # متن اصلی مقاله
-├── docs/                       # سایت ایستای RTL برای GitHub Pages
-│   └── assets/                 # عکس نویسنده، فونت، CSS و JavaScript
+├── docs/                       # لندینگ معرفی، PDF و نسخهٔ HTML
+│   ├── N8N-Persian-Guide.pdf    # خروجی اصلی؛ PDF فارسی صفحه‌آرایی‌شده
+│   └── previews/               # تصاویر واقعی صفحات PDF
 ├── workflows/lead-intake.json   # گردش‌کار آموزشی کم‌وابستگی
 ├── examples/normalize-lead.js   # منطق اعتبارسنجی بدون وابستگی
 ├── tests/lead.test.mjs          # تست منطق و ساختار گردش‌کار
@@ -81,7 +82,19 @@ python -m http.server 8080 --directory docs
 
 <div dir="rtl">
 
-سایت به framework یا CDN نیاز ندارد؛ فونت، تصویر و فایل‌ها محلی‌اند. امکانات: تم روشن/تیره، فهرست چسبان، جست‌وجوی عنوان‌ها، کپی کد، پیشرفت مطالعه، نمای چاپ و چیدمان موبایل. برای PDF از گزینهٔ Print → Save as PDF مرورگر استفاده کنید؛ PDF آماده در این مخزن ادعا نشده است.
+**خروجی اصلی، [PDF صفحه‌آرایی‌شدهٔ ۲۴ صفحه‌ای](docs/N8N-Persian-Guide.pdf) است**؛ با جلد اختصاصی، عکس نویسنده، فهرست لینک‌دار، بوکمارک، شمارهٔ صفحه و متن قابل انتخاب و جست‌وجو.
+
+سایت GitHub Pages صفحهٔ معرفی مقاله است: جلد سه‌بعدی، سرفصل‌های دسته‌بندی‌شده، پیش‌نمایش واقعی صفحات و دکمهٔ دانلود PDF. [نسخهٔ HTML کامل](https://rezaian-dev.github.io/n8n-persian-guide/reader.html) جداگانه حفظ شده است. فونت و تصاویر محلی‌اند و وابستگی به CDN وجود ندارد.
+
+### بازتولید PDF
+
+```bash
+python -m pip install -r requirements-pdf.txt
+python scripts/build_pdf.py
+python scripts/build.py
+```
+
+ساخت PDF به کتابخانه‌های سیستمی Pango/HarfBuzz/Fontconfig نیاز دارد؛ راهنمای نصب WeasyPrint را برای سیستم‌عامل خود ببینید. اسکریپت، PDF، تصویر جلد و پیش‌نمایش‌های واقعی را تولید می‌کند. برای جزئیات آزمون صفحه‌آرایی، `PDF-QUALITY.md` را ببینید.
 
 ## وضعیت آزمون و محدودیت‌ها
 
