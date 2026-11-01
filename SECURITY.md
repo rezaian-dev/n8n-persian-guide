@@ -1,5 +1,7 @@
-# گزارش امنیتی
+# Security policy
 
-هیچ‌گونه secret یا اطلاعات مشتری را در Issue عمومی منتشر نکنید. برای گزارش آسیب‌پذیری در مثال‌های این مخزن به mrezaian.dev@gmail.com پیام دهید و فقط توضیح پاک‌سازی‌شده بفرستید. برای آسیب‌پذیری خود n8n از فرایند رسمی امنیتی پروژهٔ n8n استفاده کنید.
+Do not disclose secrets, credentials, private workflow exports, or customer data in public issues.
 
-نمونهٔ Webhook بدون احراز هویت فقط برای localhost و دادهٔ ساختگی است. این راهنما سرویس n8n عمومی ارائه نمی‌کند.
+For a vulnerability in this repository's examples or website, contact **mrezaian.dev@gmail.com** with a sanitized description. Vulnerabilities in n8n itself should be reported through the upstream project's security process.
+
+The unauthenticated webhook example is for localhost and synthetic data only. This repository does not operate a public n8n service. Deployment examples are educational starting points, not a complete security baseline or production guarantee.

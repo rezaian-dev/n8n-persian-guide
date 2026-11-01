@@ -1,11 +1,44 @@
 {
-  "pages": 24,
-  "bytes": 621028,
+  "pages": 35,
+  "bytes": 1268548,
   "edition": "2026-11-01",
   "sample_pages": [
     1,
-    10,
-    16
+    11,
+    19
   ],
-  "source_sha256": "b176f641013ae13e049cf0f72d75f34a19ad020add1b4f32433fc01b49b1641f"
+  "source_sha256": "b176f641013ae13e049cf0f72d75f34a19ad020add1b4f32433fc01b49b1641f",
+  "layout_sha256": "6bac69d9569bf0671b3e2f42493b18cf9f58cd550fc4b085bb2bf5e7a2f74559",
+  "chapter_pages": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    13,
+    14,
+    15,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34
+  ],
+  "illustrations": 6,
+  "motion_version": "14.9.0"
 }

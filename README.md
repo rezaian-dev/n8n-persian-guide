@@ -1,40 +1,45 @@
 <div align="center">
 
-<img src="docs/assets/social.png" alt="n8n Persian Guide — راهنمای جامع و کاربردی n8n" width="100%" />
+<img src="docs/assets/social.png" alt="n8n Persian Guide — a practical, illustrated engineering handbook" width="100%" />
 
-# راهنمای جامع و کاربردی n8n
-### از اتصال ابزارها تا ساختن سیستم‌های قابل‌اعتماد
+# n8n Persian Guide
 
-**نویسنده و گردآورنده: محمدرضا رضائیان**
+### From connected tools to reliable systems
 
-[**🌐 معرفی مقاله و دریافت PDF**](https://rezaian-dev.github.io/n8n-persian-guide/) · [**⬇️ دانلود مستقیم PDF**](docs/N8N-Persian-Guide.pdf) · [**📖 متن مقاله**](guide.md) · [**⚙️ گردش‌کار نمونه**](workflows/lead-intake.json)
+**Written and curated by Mohammadreza Rezaian**
 
-**PDF فارسی ۲۴ صفحه‌ای** · ۲۶ بخش کاربردی · نمونهٔ JSON · ۱۰ تست مستقل
+[**Download the PDF**](docs/N8N-Persian-Guide.pdf) · [**Explore the book website**](https://rezaian-dev.github.io/n8n-persian-guide/) · [**Read the source**](guide.md)
 
-</div>
-
----
-
-<div dir="rtl">
-
-## چرا این راهنما؟
-
-این مقاله برای کسی نوشته شده که می‌خواهد از «چند نود متصل» عبور کند و یک فرایند قابل‌فهم، قابل‌بازیابی و امن بسازد. از JSON و Webhook شروع می‌کنیم، به API، اعتبارسنجی، Idempotency و عملیات می‌رسیم، و در پایان AI، RAG و تأیید انسانی را با مرزهای روشن بررسی می‌کنیم.
-
-**بررسی منابع:** ۱ نوامبر ۲۰۲۶ · **مبنای مثال‌ها:** n8n 2.45.7. مستندات زنده و نسخه‌ها تغییر می‌کنند؛ این تاریخ تضمین به‌روزبودن همیشگی نیست.
-
-## مسیرهای مطالعه
-
-| مسیر | موضوع |
-|---|---|
-| ساختن | مفاهیم، داده، Expression، نصب محلی، Webhook و اعتبارسنجی |
-| قابل‌اعتمادکردن | API، تکرار، خطا، Retry، دریافت پایدار و اثر جانبی |
-| عملیات | PostgreSQL، runner خارجی، TLS، امنیت، صف، پایش و بازیابی |
-| هوشمندسازی | مدل و Agent، RAG، MCP، تأیید انسانی و ارزیابی |
-
-## شروع سریع
+**35 designed A4 pages · 26 chapters · 6 original technical illustrations · 10 independent tests**
 
 </div>
+
+## What this repository contains
+
+A practical Persian-language guide to n8n: data and expressions, webhooks, API integration, input validation, idempotency, error handling, deployment, security, observability, recovery, and controlled AI workflows.
+
+The **PDF is the primary deliverable**. Its editorial layout is inspired by the author's [TypeScript Persian Guide](https://github.com/rezaian-dev/typescript-persian-guide): independent chapter openings, learning objectives, navy-and-gold accents, syntax-highlighted code frames, exercises, acceptance checks, clickable contents, and PDF bookmarks.
+
+The website is a **book introduction and download page**, not a duplicate full-text reader. It features real PDF previews, chapter-to-PDF links, a responsive book presentation, and locally bundled **Motion 14.9.0** animations. Reduced-motion preferences are respected. No CDN, analytics, tracking, or runtime framework is required.
+
+**Documentation reviewed:** November 1, 2026. **Example baseline:** n8n 2.45.7. These are dated references, not a claim that this version will always be current.
+
+## Read, then build
+
+| Track | Topics |
+| --- | --- |
+| Foundations | Events, nodes, items, expressions, tool selection, licensing |
+| First workflow | Local setup, webhooks, validation, HTTP responses, APIs |
+| Reliability | Durable intake, duplicate handling, retries, compensation |
+| Operations | PostgreSQL, external runners, TLS, security, queue mode, recovery |
+| Controlled AI | Structured output, RAG, tool permissions, human approval |
+| Verification | Evaluation, troubleshooting, release checks, learning roadmap |
+
+The PDF adds chapter objectives and practical review exercises to the Markdown article. These editorial notes are maintained in `scripts/book-notes.json`.
+
+## Try the local example
+
+Requires Docker with Compose. Use **synthetic data only**.
 
 ```bash
 git clone https://github.com/rezaian-dev/n8n-persian-guide.git
@@ -42,83 +47,78 @@ cd n8n-persian-guide
 docker compose -f deploy/compose.local.yaml up -d
 ```
 
-<div dir="rtl">
+Open `http://localhost:5678`, create a local owner account, and import [`workflows/lead-intake.json`](workflows/lead-intake.json). Follow chapter 7 of the PDF.
 
-رابط را در `http://localhost:5678` باز کنید. فایل [lead-intake.json](workflows/lead-intake.json) را وارد کنید و بخش ۷ مقاله را دنبال کنید. نمونه فقط ورودی را اعتبارسنجی می‌کند؛ **ثبت پایدار یا اتصال CRM ندارد** و Webhook بدون احراز هویت آن فقط برای آزمایش محلی است.
+The demonstration validates a lead and returns HTTP `200` or `422`. It **does not persist submissions, contact a CRM, or send messages**. Its unauthenticated webhook is intended only for isolated local testing. Do not expose it publicly without authentication, rate limiting, and an appropriate security review.
 
-## ساختار مخزن
+The server Compose file is a **staging starting point**, not a complete production deployment. Replace every secret in `deploy/.env.example`, keep n8n and runner versions aligned, configure HTTPS through a host reverse proxy, and test recovery. Never use `down -v` on data you need to retain.
 
-</div>
+## Build and validate
 
-```text
-.
-├── guide.md                    # متن اصلی مقاله
-├── docs/                       # لندینگ معرفی، PDF و نسخهٔ HTML
-│   ├── N8N-Persian-Guide.pdf    # خروجی اصلی؛ PDF فارسی صفحه‌آرایی‌شده
-│   └── previews/               # تصاویر واقعی صفحات PDF
-├── workflows/lead-intake.json   # گردش‌کار آموزشی کم‌وابستگی
-├── examples/normalize-lead.js   # منطق اعتبارسنجی بدون وابستگی
-├── tests/lead.test.mjs          # تست منطق و ساختار گردش‌کار
-├── deploy/                     # Compose محلی و مبنای staging
-├── scripts/                    # ساخت و بررسی سایت
-└── .github/workflows/ci.yml     # بررسی خودکار، نه استقرار n8n
-```
-
-<div dir="rtl">
-
-## ساخت سایت و اجرای تست
-
-نیازمندی: Python 3.10+، Node.js 20+؛ Docker فقط برای اجرای خود n8n.
-
-</div>
+Requires Python 3.10+, Node.js 20+, and the system libraries required by WeasyPrint, including Pango, HarfBuzz, Fontconfig, and DejaVu Sans Mono. See the [WeasyPrint installation guide](https://doc.courtbouillon.org/weasyprint/stable/first_steps.html#installation) for OS-specific setup.
 
 ```bash
 python -m pip install -r requirements.txt
 npm test
+python scripts/build_pdf.py
 python scripts/build.py
 python scripts/check.py
+python scripts/check_pdf.py
 python -m http.server 8080 --directory docs
 ```
 
-<div dir="rtl">
+The PDF builder also renders the real cover and sample-page previews. Committed metadata supplies the website's page count, download size, and exact PDF chapter links. Source and layout hashes detect a stale PDF.
 
-**خروجی اصلی، [PDF صفحه‌آرایی‌شدهٔ ۲۴ صفحه‌ای](docs/N8N-Persian-Guide.pdf) است**؛ با جلد اختصاصی، عکس نویسنده، فهرست لینک‌دار، بوکمارک، شمارهٔ صفحه و متن قابل انتخاب و جست‌وجو.
-
-سایت GitHub Pages صفحهٔ معرفی مقاله است: جلد سه‌بعدی، سرفصل‌های دسته‌بندی‌شده، پیش‌نمایش واقعی صفحات و دکمهٔ دانلود PDF. [نسخهٔ HTML کامل](https://rezaian-dev.github.io/n8n-persian-guide/reader.html) جداگانه حفظ شده است. فونت و تصاویر محلی‌اند و وابستگی به CDN وجود ندارد.
-
-### بازتولید PDF
+To regenerate the original illustrations, install the optional artwork tooling:
 
 ```bash
-python -m pip install -r requirements-pdf.txt
+python -m pip install playwright==1.64.1
+python -m playwright install --with-deps chromium
+python scripts/build_figures.py
 python scripts/build_pdf.py
 python scripts/build.py
 ```
 
-ساخت PDF به کتابخانه‌های سیستمی Pango/HarfBuzz/Fontconfig نیاز دارد؛ راهنمای نصب WeasyPrint را برای سیستم‌عامل خود ببینید. اسکریپت، PDF، تصویر جلد و پیش‌نمایش‌های واقعی را تولید می‌کند. برای جزئیات آزمون صفحه‌آرایی، `PDF-QUALITY.md` را ببینید.
+The distributed images are already included; normal reading, website hosting, and CI do not require Playwright.
 
-## وضعیت آزمون و محدودیت‌ها
+## Verification and limitations
 
-- منطق اعتبارسنجی و اتصال‌های JSON به‌طور مستقل با Node.js تست می‌شوند.
-- سایت از منبع Markdown ساخته می‌شود و مسیرهای محلی و anchorها بررسی می‌شوند.
-- Import و اجرای واقعی workflow در n8n، Docker، TLS، API خارجی و backup/restore باید در محیط مقصد تست شوند.
-- بخش AI طرح معماری و راهنمای پیاده‌سازی است؛ نمونهٔ متصل به مدل با کلید واقعی نیست.
-- فایل server Compose، نقطهٔ شروع staging است؛ پیکربندی کامل و تضمین‌شدهٔ Production نیست.
+- **10 independent Node.js tests** cover validation logic, item linkage, and workflow structure.
+- PDF checks cover source/layout freshness, page metadata, searchable text, bookmarks, internal destinations, and text outside page bounds.
+- Website checks validate local assets and links. Desktop/mobile checks also exercised theme switching, contents expansion, and PDF downloads.
+- Motion effects were checked with normal and reduced-motion preferences. Motion and its MIT license are stored locally under `docs/assets/vendor/`.
+- PDF covers, representative pages, and a thumbnail overview were visually reviewed. This is not a complete human copyedit or a PDF/UA accessibility certification.
+- Full workflow import/execution inside n8n, Docker startup, external services, TLS, and backup restoration still require testing in the target environment. AI sections are implementation designs, not live connected agents.
 
-## انتشار GitHub Pages
+## Repository layout
 
-در Settings → Pages، روش Deploy from a branch، شاخهٔ `main` و پوشهٔ `/docs` را انتخاب کنید. سایت ایستا است و GitHub Pages خود n8n را اجرا نمی‌کند. فایل تولیدشدهٔ سایت در مخزن نگه داشته شده تا انتشار بدون build اختصاصی امکان‌پذیر باشد.
+```text
+.
+├── guide.md                       # Persian article source
+├── docs/
+│   ├── N8N-Persian-Guide.pdf       # Primary publication
+│   ├── index.html                 # Generated book landing page
+│   ├── assets/                    # Local font, author photo, Motion, site assets
+│   ├── figures/                   # Six original technical illustrations
+│   └── previews/                  # Images rendered from the actual PDF
+├── workflows/lead-intake.json      # Importable local demonstration
+├── examples/normalize-lead.js      # Dependency-free validation logic
+├── tests/                         # Independent example tests
+├── deploy/                        # Local/staging Compose and proxy example
+└── scripts/                       # Publication sources, builders, and checks
+```
 
-## نویسنده
+There is one distributed PDF and no duplicate HTML reader, duplicate deployment documentation, dependency directories, private environment files, or test screenshots in the repository. The generated website and publication assets are retained because GitHub Pages serves them directly.
 
-<img src="docs/assets/author.webp" width="150" alt="محمدرضا رضائیان" />
+## Publishing
 
-**محمدرضا رضائیان — Front-End Engineer**<br />
-[GitHub](https://github.com/rezaian-dev) · [پورتفولیو](https://rezaian-dev.vercel.app/fa) · [ایمیل](mailto:mrezaian.dev@gmail.com)
+GitHub Pages uses the `main` branch and `/docs` directory. Commit regenerated publication files together. Pages serves the book website; it does **not** host n8n itself.
 
-این راهنما با کمک ابزارهای پژوهش و نگارش هوش مصنوعی تهیه شده است. حدود آزمون و تاریخ منابع شفاف‌اند. برای اصلاح فنی، [راهنمای مشارکت](CONTRIBUTING.md) را ببینید؛ اطلاعات حساس را در Issue قرار ندهید.
+## Author and rights
 
-## حقوق
+**Mohammadreza Rezaian — Front-End Engineer**<br />
+[Portfolio](https://rezaian-dev.vercel.app/fa) · [GitHub](https://github.com/rezaian-dev) · [Email](mailto:mrezaian.dev@gmail.com)
 
-همهٔ حقوق متن، طراحی، مثال‌ها و عکس نویسنده محفوظ است؛ [جزئیات](LICENSE.md). فونت Vazirmatn مجوز مستقل SIL OFL دارد. n8n مجوز مستقل Sustainable Use License / Enterprise دارد؛ این مقاله پروژهٔ رسمی n8n نیست.
+Prepared with AI-assisted research and writing. Sources, review date, and verification limits are documented. Corrections are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md). Never publish credentials or customer data in an issue.
 
-</div>
+Text, design, examples, and the author's photograph: all rights reserved; see [LICENSE.md](LICENSE.md). Motion is MIT-licensed and Vazirmatn uses SIL OFL; their original licenses are included. n8n has its own Sustainable Use / Enterprise licensing. This is an independent guide, not an official n8n publication.

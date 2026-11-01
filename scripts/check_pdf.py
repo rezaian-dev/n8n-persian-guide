@@ -8,6 +8,8 @@ file=ROOT/'docs/N8N-Persian-Guide.pdf';pdf=fitz.open(file)
 assert len(pdf)==meta['pages']
 assert file.stat().st_size==meta['bytes']
 assert hashlib.sha256((ROOT/'guide.md').read_bytes()).hexdigest()==meta['source_sha256'], 'PDF is stale relative to guide.md'
+layout_files=['scripts/build_pdf.py','scripts/book.css','scripts/book-notes.json','scripts/build_figures.py']
+assert hashlib.sha256(b''.join((ROOT/f).read_bytes() for f in layout_files)).hexdigest()==meta['layout_sha256'], 'PDF layout sources have changed; rebuild the PDF'
 assert len(pdf.get_toc())>=28, 'Missing bookmarks'
 assert all(len(page.get_text().strip())>30 for page in pdf), 'Empty or image-only page'
 internal=[link for page in pdf for link in page.get_links() if link.get('page',-1)>=0]

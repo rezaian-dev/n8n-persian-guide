@@ -1,14 +1,24 @@
-# مشارکت در راهنما
+# Contributing
 
-برای گزارش خطا، شمارهٔ بخش، نسخهٔ n8n و نتیجهٔ قابل‌بازتولید را بنویسید. در مثال‌ها فقط دادهٔ ساختگی بفرستید. کلید، Credential، payload مشتری یا export دارای pinData واقعی ارسال نکنید.
+Report technical corrections with the chapter, n8n version, expected result, and a reproducible example using synthetic data. Do not upload tokens, credentials, customer payloads, or workflow exports containing private pinned data.
 
-ویرایش اصلی در `guide.md` است، نه `docs/index.html` که تولیدی است. برای تغییر ظاهر `scripts/template.html` و `docs/assets/style.css` را ویرایش کنید.
+## Sources of truth
+
+- `guide.md`: Persian article text.
+- `scripts/book-notes.json`: chapter objectives and review exercises.
+- `scripts/book.css` and `scripts/build_pdf.py`: PDF layout and publication.
+- `scripts/landing.html`, `docs/assets/landing.css`, and `docs/assets/landing.js`: website.
+- `scripts/build_figures.py`: original technical illustrations.
+
+Do not directly edit generated HTML, PDF, metadata, or PDF previews. Regenerate them and include them with the corresponding source changes.
 
 ```bash
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 npm test
+python scripts/build_pdf.py
 python scripts/build.py
 python scripts/check.py
+python scripts/check_pdf.py
 ```
 
-منبع رسمی و تاریخ بررسی برای ادعای نسخه‌محور لازم است. اصلاح فنی کوچک و قابل‌بررسی را به تغییر بزرگ ترجیح دهید. هیچ نمونه‌ای را بدون ثبت نوع آزمون «production-ready» معرفی نکنید.
+Consult the root README for system requirements and optional illustration tooling. Keep changes focused, cite official sources for version-sensitive claims, preserve reduced-motion behavior, and state what was actually tested. Never label an example production-ready without evidence.

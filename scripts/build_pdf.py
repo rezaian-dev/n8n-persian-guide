@@ -1,5 +1,5 @@
 """Typeset the Persian guide as a searchable, bookmarked A4 PDF.
-Install requirements-pdf.txt before running this script.
+Install requirements.txt before running this script.
 """
 from pathlib import Path
 import re, json, hashlib
@@ -9,30 +9,65 @@ ROOT=Path(__file__).resolve().parents[1]
 source=(ROOT/'guide.md').read_text()
 content=markdown.markdown(source,extensions=['tables','fenced_code','sane_lists'])
 content=content[content.index('<h2>'):]
+from html import escape, unescape
+from pygments import highlight
+from pygments.lexers import get_lexer_by_name, TextLexer
+from pygments.formatters import HtmlFormatter
+notes=json.loads((ROOT/'scripts/book-notes.json').read_text())
 headings=[]
-def section(match):
- title=match.group(1);index=len(headings)+1;key=f'chapter-{index}'
- headings.append((key,title))
- group=' part-start' if index in [1,6,10,13,19,23,27] else ''
- return f'<h2 class="chapter{group}" id="{key}">{title}</h2>'
-content=re.sub(r'<h2>(.*?)</h2>',section,content)
+parts=re.split(r'<h2>(.*?)</h2>',content)
+figures={4:('flow','مدل مفهومی یک گردش‌کار قابل‌ردیابی'),7:('webhook','قرارداد ورودی و دو مسیر جایگزین پاسخ'),10:('idempotency','طرح مفهومی جلوگیری از اثر تکراری'),13:('infrastructure','مرزهای زیرساخت در مبنای staging'),20:('rag','بازیابی زمینه با کنترل دسترسی'),21:('human','اجرای ابزار پرریسک با تأیید انسان')}
+groups=[(5,'بخش یک · مبانی و مدل ذهنی'),(9,'بخش دو · از ورودی تا API'),(12,'بخش سه · اعتمادپذیری'),(18,'بخش چهار · استقرار و عملیات'),(22,'بخش پنج · هوش مصنوعی کنترل‌شده'),(26,'بخش شش · تست و انتشار')]
+chapters=[]
+for i in range(1,len(parts),2):
+    number=(i+1)//2;title=parts[i];body=parts[i+1];key=f'chapter-{number}'
+    headings.append((key,title))
+    clean=re.sub(r'^[۰-۹0-9]+[.\s]+','',title)
+    if number<=26:
+        note=notes[number-1]
+        group=next(label for limit,label in groups if number<=limit)
+        goals=''.join('<li>'+escape(g)+'</li>' for g in note['goals'])
+        density=" dense" if number in [4,13,19,20,21] else ""
+        opening=f'<section class="page-chapter{density}"><div class="chapter-kicker"><b>{number:02d}</b><span>{group}</span></div><h2 class="chapter" id="{key}">{clean}</h2><div class="objectives"><strong>هدف‌های یادگیری این فصل</strong><ul>{goals}</ul></div>'
+        if number in figures:
+            name,caption=figures[number]
+            figure=f'<figure class="technical-figure"><img src="docs/figures/{name}.png" alt="{caption}"><figcaption>تصویر {number} · {caption}</figcaption></figure>'
+            # Keep the figure near the opening, before the next major content block.
+            position=body.find('</p>')+4
+            body=body[:position]+figure+body[position:]
+        ending=f'<div class="exercise"><div class="exercise-label">تمرین و کنترل</div><p>{escape(note["task"])}</p><p class="acceptance"><b>معیار پذیرش:</b> {escape(note["check"])}</p></div></section>'
+    else:
+        opening=f'<section class="reference-page"><h2 class="chapter" id="{key}">{clean}</h2>'
+        ending='</section>'
+    chapters.append(opening+body+ending)
+content=''.join(chapters)
+formatter=HtmlFormatter(nowrap=True,style='one-dark')
+def code_frame(match):
+    language=match.group(1) or 'text'
+    try:lexer=get_lexer_by_name(language)
+    except Exception:lexer=TextLexer()
+    colored=highlight(unescape(match.group(2)),lexer,formatter)
+    label=escape(language.upper())
+    return f'<div class="code-window"><div class="code-toolbar"><span class="traffic"><i></i><i></i><i></i></span><b>{label} / EXAMPLE</b><small>نمونهٔ آموزشی</small></div><pre>{colored}</pre></div>'
+content=re.sub(r'<pre><code(?: class="language-([^" ]+)")?>(.*?)</code></pre>',code_frame,content,flags=re.S)
 toc=''.join(f'<li><a href="#{key}">{title}</a></li>' for key,title in headings)
-css=(ROOT/'scripts/book.css').read_text()
+css=(ROOT/'scripts/book.css').read_text()+'\n'+formatter.get_style_defs('.code-window')
 html='''<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
 <title>راهنمای جامع و کاربردی n8n — محمدرضا رضائیان</title>
 <meta name="author" content="Mohammadreza Rezaian — محمدرضا رضائیان">
 <meta name="description" content="راهنمای فارسی n8n؛ اتوماسیون قابل‌اعتماد، API، استقرار امن و هوش مصنوعی کنترل‌شده.">
 <style>'''+css+'''</style></head><body>
 <section class="cover">
- <div class="cover-top"><span>ENGINEERING NOTES / 01</span><b>راهنمای فارسی</b></div>
- <div class="cover-rule"></div>
+ <div class="cover-code" dir="ltr">const workflow = {<br>  event: 'received',<br>  validate: true,<br>  retry: 'bounded',<br>  humanReview: 'required'<br>};<br>// Build small. Build reliable.</div>
+ <p class="cover-overline">P E R S I A N   E N G I N E E R I N G   G U I D E</p>
+ <div class="cover-logo" dir="ltr">n8n</div>
  <p class="cover-kicker">راهنمای جامع و کاربردی</p>
- <h1 dir="ltr">n8n<span>.</span></h1>
- <h2>از اتصال ابزارها<br>تا ساختن سیستم‌های<br><em>قابل‌اعتماد.</em></h2>
- <p class="cover-desc">اتوماسیون، API، استقرار امن و هوش مصنوعی کنترل‌شده<br>همراه با مثال عملی، کد و منابع رسمی</p>
- <div class="cover-tags"><span>WORKFLOWS</span><span>SECURITY</span><span>AI + RAG</span></div>
- <div class="cover-author"><img src="docs/assets/author.webp" alt="محمدرضا رضائیان"><div><small>نویسنده و گردآورنده</small><strong>محمدرضا رضائیان</strong><p dir="ltr">Front-End Engineer</p></div></div>
- <div class="cover-bottom"><span>۲۶ بخش کاربردی · ویرایش اول</span><span>نوامبر ۲۰۲۶</span></div>
+ <h1>اتوماسیون،<br><em>همان‌طور که باید.</em></h1>
+ <p class="cover-subtitle">از مدل ذهنی تا ساختن سیستم‌های قابل‌اعتماد</p>
+ <p class="cover-desc">داده و API · مدیریت خطا و تکرار · استقرار امن<br>هوش مصنوعی کنترل‌شده، همراه با مثال و تمرین</p>
+ <div class="cover-tags"><span>۲۶ فصل کاربردی</span><span>۶ تصویر مفهومی</span><span>مثال و تمرین</span><span>منابع رسمی</span></div>
+ <div class="cover-author"><img src="docs/assets/author.webp" alt="محمدرضا رضائیان"><div><strong>محمدرضا رضائیان</strong><small>نویسنده و گردآورنده · برای جامعهٔ توسعه‌دهندگان فارسی‌زبان</small></div></div>
+ <div class="cover-bottom"><span>n8n 2.45.7 · PostgreSQL · API · AI</span><span>ویرایش اول / نوامبر ۲۰۲۶</span></div>
 </section>
 <section class="imprint">
  <p class="overline">BEFORE YOU START</p><h1>پیش از شروع</h1>
@@ -56,8 +91,12 @@ import fitz
 pdf=fitz.open(output)
 previews=ROOT/'docs/previews'
 previews.mkdir(exist_ok=True)
-for index, name in [(0, 'cover'), (9, 'sample-01'), (15, 'sample-02')]:
-    pdf[index].get_pixmap(matrix=fitz.Matrix(1.5, 1.5)).save(previews/f'{name}.png')
-meta={'pages':len(pdf),'bytes':output.stat().st_size,'edition':'2026-11-01','sample_pages':[1,10,16],'source_sha256':hashlib.sha256((ROOT/'guide.md').read_bytes()).hexdigest()}
+destinations={link.get('nameddest'):link.get('page') for page in pdf for link in page.get_links() if link.get('nameddest')}
+samples=[0,destinations['chapter-7'],destinations['chapter-13']]
+for index,name in zip(samples,['cover','sample-01','sample-02']):
+    pdf[index].get_pixmap(matrix=fitz.Matrix(1.5,1.5)).save(previews/f'{name}.png')
+layout_files=['scripts/build_pdf.py','scripts/book.css','scripts/book-notes.json','scripts/build_figures.py']
+layout_hash=hashlib.sha256(b''.join((ROOT/f).read_bytes() for f in layout_files)).hexdigest()
+meta={'pages':len(pdf),'bytes':output.stat().st_size,'edition':'2026-11-01','sample_pages':[x+1 for x in samples],'source_sha256':hashlib.sha256((ROOT/'guide.md').read_bytes()).hexdigest(),'layout_sha256':layout_hash,'chapter_pages':[destinations[f'chapter-{n}']+1 for n in range(1,29)],'illustrations':6,'motion_version':'14.9.0'}
 (ROOT/'docs/assets/book-meta.json').write_text(json.dumps(meta,indent=2)+'\n')
 print(f'PDF: {len(pdf)} pages, {len(pdf.get_toc())} bookmarks, previews generated.')

@@ -14,7 +14,7 @@ class Check(HTMLParser):
    if key in a:self.refs.append(a[key])
   if tag=='img':assert a.get('alt'), 'Image missing alt';self.images+=1
 
-for filename in ['index.html','reader.html']:
+for filename in ['index.html']:
  page=Check();page.feed((ROOT/'docs'/filename).read_text())
  for ref in page.refs:
   if ref.startswith('#'):
