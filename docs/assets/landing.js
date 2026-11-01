@@ -143,10 +143,20 @@
   play(el,{y:-5},{duration:.28,ease:'easeOut'});
   return()=>play(el,{y:0},{duration:.35,ease:'easeOut'});
  });
+ // Magnetic motion is deliberately small and only runs with a fine pointer.
  hover('.button,.nav-download',el=>{
-  if(reduced.matches)return;
-  play(el,{y:-3,scale:1.015},{duration:.22});
-  return()=>play(el,{y:0,scale:1},{duration:.28});
+  if(reduced.matches||!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  const bounds=el.getBoundingClientRect();let frame=0;let point=null;
+  const spring={type:'spring',stiffness:320,damping:28,mass:.6};
+  play(el,{y:-2,scale:1.015},spring);
+  const move=e=>{
+   if(reduced.matches)return;
+   point={x:Math.max(-1,Math.min(1,(e.clientX-bounds.left)/bounds.width*2-1)),y:Math.max(-1,Math.min(1,(e.clientY-bounds.top)/bounds.height*2-1))};
+   if(frame)return;
+   frame=requestAnimationFrame(()=>{frame=0;if(!reduced.matches&&point)play(el,{x:point.x*6,y:point.y*4-2,scale:1.015},spring)});
+  };
+  el.addEventListener('pointermove',move);
+  return()=>{el.removeEventListener('pointermove',move);cancelAnimationFrame(frame);play(el,{x:0,y:0,scale:1},spring)};
  });
  document.querySelectorAll('.module').forEach(el=>el.addEventListener('toggle',()=>{
   if(el.open&&!reduced.matches)play(el.querySelector('ol'),{opacity:[0,1],y:[-7,0]},{duration:.3});

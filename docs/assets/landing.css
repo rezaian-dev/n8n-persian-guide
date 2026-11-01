@@ -68,3 +68,11 @@ html[data-theme=light]{--bg:#f7f7f2;--panel:#fffefa;--panel2:#eaf2f1;--ink:#1630
 @media(min-width:1151px){.site-header nav a{font-size:12px}.footer-links>a{font-size:13px}}
 @media(max-width:760px){.module li a.chapter-link,.chapter-link>span:nth-child(2){font-size:14px}.chapter-link .chapter-number,.chapter-link>small{font-size:11px}.chapter-search input{font-size:12px}.footer-links>a{font-size:12px}}
 @media(max-width:370px){.footer-links>a{font-size:11px}}
+
+/* Essential footer only; no repeated table of contents or duplicate source lists. */
+.footer-main{grid-template-columns:1.5fr 1fr;gap:70px;padding-top:40px;padding-bottom:32px}
+.footer-brand .brand{margin-bottom:18px}.footer-brand>p{margin-bottom:16px;max-width:none}
+@media(max-width:900px){.footer-brand{grid-column:auto}.footer-main{gap:35px}}
+@media(max-width:760px){.footer-main{grid-template-columns:1fr;gap:26px;padding-top:32px;padding-bottom:28px}.footer-links{display:flex;flex-direction:row;align-items:center;flex-wrap:wrap;gap:16px 22px}.footer-links h3{width:100%;margin:0}.footer-links>a{font-size:12px}.header-actions{min-width:0}.hero-buttons{min-width:0}.button{min-width:0}.hero-buttons .button{gap:10px;padding-left:12px;padding-right:12px}}
+
+@media(pointer:coarse){.site-header .theme-toggle,.site-header .menu-toggle{width:44px;height:44px}.site-header .nav-download,.mobile-download a{min-height:44px}.preview-modal-body>button,.preview-modal-head button{min-width:44px;min-height:44px}}

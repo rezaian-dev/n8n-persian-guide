@@ -70,19 +70,18 @@ content=re.sub(r'<pre><code(?: class="language-([^" ]+)")?>(.*?)</code></pre>',c
 fa=lambda value:str(value).translate(str.maketrans('0123456789','۰۱۲۳۴۵۶۷۸۹'))
 toc_groups=[('01','مبانی و مدل ذهنی','پیش از ساختن، مسئله و داده را بشناسید.',1,5),('02','اولین گردش‌کار','از یک ورودی ساده تا اتصال API.',6,9),('03','اعتمادپذیری','تکرار، خطا و اثر جانبی را کنترل کنید.',10,12),('04','استقرار و عملیات','از محیط محلی تا زیرساخت قابل‌بازیابی.',13,18),('05','هوش مصنوعی کنترل‌شده','مدل، بازیابی سند و اختیار انسان.',19,22),('06','آزمون و انتشار','کیفیت را با شواهد نشان دهید.',23,26)]
 toc_pages=[]
-for page_index,(group_number,group_title,summary,start,end) in enumerate(toc_groups):
+for page_index in range(3):
     cards=[]
-    for n in range(start,end+1):
-        key,title=headings[n-1]
-        clean=re.sub(r'^[۰-۹0-9]+[.\s]+','',title)
-        rows=[f'<a class="toc-row chapter-row" href="#{key}"><span class="toc-index">{fa(n)}</span><span class="toc-title">{clean}</span></a>']
-        for anchor,label,index in subheadings[n]:
-            rows.append(f'<a class="toc-row subsection-row" href="#{anchor}"><span class="toc-index">{fa(n)}.{fa(index)}</span><span class="toc-title">{label}</span></a>')
-        cards.append('<div class="toc-chapter">'+''.join(rows)+'</div>')
-    extras=''
-    if page_index==5:
-        extras='<div class="toc-extras">'+''.join(f'<a class="toc-row" href="#{key}"><span class="toc-title">{title}</span></a>' for key,title in headings[26:])+'</div>'
-    toc_pages.append(f'<section class="contents" id="contents-{group_number}"><div class="toc-top"><p class="overline">CONTENTS / {group_number}</p><span>فصل، زیربخش و صفحهٔ دقیق</span></div><h1>فهرست تفصیلی</h1><div class="toc-group-heading"><b>{icon(chapter_icons[start-1])}<span>{fa(group_number)}</span></b><div><h2>{group_title}</h2><p>{summary}</p></div></div>'+''.join(cards)+extras+'</section>')
+    for group_number,group_title,summary,start,end in toc_groups[page_index*2:page_index*2+2]:
+        rows=[]
+        for n in range(start,end+1):
+            key,title=headings[n-1]
+            clean=re.sub(r'^[۰-۹0-9]+[.\s]+','',title)
+            rows.append(f'<a class="toc-entry" href="#{key}"><span>{fa(n)}. {clean}</span></a>')
+        cards.append(f'<div class="contents-group"><h2>{group_title}</h2>'+''.join(rows)+'</div>')
+    if page_index==2:
+        cards.append('<div class="contents-group"><h2>پیوست و منابع</h2>'+''.join(f'<a class="toc-entry" href="#{key}"><span>{title}</span></a>' for key,title in headings[26:])+'</div>')
+    toc_pages.append(f'<section class="contents" id="contents-{page_index+1}"><p class="contents-kicker">۲۶ فصل · مثال، تمرین و تحلیل</p><h1>فهرست مطالب</h1>'+''.join(cards)+'</section>')
 toc=''.join(toc_pages)
 css=(ROOT/'scripts/book.css').read_text()+'\n'+formatter.get_style_defs('.code-window')
 html='''<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8">

@@ -19,28 +19,6 @@
 .imprint h2{margin:5mm 0 2mm;font-size:11.5pt}
 .imprint{font-size:9pt;line-height:1.8}
 .imprint .edition{margin:4mm 0;padding:2mm 4mm}
-/* Full two-level contents, automatic destinations and page numbers. No leaders. */
-.contents{break-before:page;break-after:page}
-.toc-top{display:flex;justify-content:space-between;align-items:baseline;color:#52677d;font-size:9pt}
-.toc-top .overline{font-size:8.5pt;margin:0 0 3mm}
-.contents h1{font-size:25pt;margin:0 0 6mm;bookmark-level:1}
-.toc-group-heading{display:flex;gap:4mm;align-items:center;margin:0 0 7mm}
-.toc-group-heading>b{font-size:17pt;color:#b77c17;padding-left:4mm}
-.toc-group-heading h2{font-size:14pt;bookmark-level:none;margin:0}
-.toc-group-heading p{font-size:10pt;color:#536981;margin:1mm 0 0}
-.toc-chapter{break-inside:avoid;margin-bottom:3mm}
-.toc-row{display:table;table-layout:fixed;width:100%;text-decoration:none;color:#30415e;line-height:1.6;border:0;padding:1mm 0}
-.toc-index{display:table-cell;vertical-align:top;width:13mm;color:#16777c;font-size:10.5pt;text-align:center}
-.toc-title{display:table-cell;vertical-align:top;padding-left:4mm;font-size:12pt}
-.toc-row::after{display:table-cell;vertical-align:top;width:12mm;text-align:center;content:target-counter(attr(href),page,persian);font-size:11pt;color:#233c55}
-.chapter-row .toc-title{font-weight:800}
-.subsection-row{padding:.65mm 0;color:#415870}
-.subsection-row .toc-index{font-size:10pt;color:#55768a}
-.subsection-row .toc-title{font-size:10.8pt;padding-right:3mm}
-.subsection-row::after{font-size:10.5pt}
-.toc-extras{margin-top:5mm;background:#f3f6fa;border-radius:2mm;padding:3mm 4mm;break-inside:avoid}
-.toc-extras .toc-row{padding:1.8mm 0}
-.toc-extras .toc-title{font-size:11pt}
 .sub-number{font-size:8pt;color:#ac7c26;margin-left:2mm}
 h4{color:#273c59;font-size:10pt;font-weight:800;line-height:1.85;margin:0 0 2mm;break-after:avoid;bookmark-level:3}
 .interview-card{break-inside:avoid;margin:5mm 0;padding:4mm 4.5mm;background:#f3f6fb;border-right:2pt solid #eb8a75;border-radius:1.5mm;font-size:10pt;line-height:1.95}
@@ -64,14 +42,14 @@ h3{background:linear-gradient(to left,#eef8f6,#fff);border-color:#278c8a;font-si
 .interview-card{border-color:#57aaa6;border-radius:2mm;background:#f2f8fb;padding:4mm 4.5mm}
 .interview-mark{display:flex;align-items:center;gap:2mm;color:#387c83;margin-bottom:2mm;font-size:8pt}.interview-mark .book-icon{width:4mm;height:4mm}
 h4{font-size:11pt;line-height:1.85}.interview-card h4{bookmark-label:content()}
-.toc-group-heading>b{display:flex;align-items:center;gap:3mm;color:#167a80;background:#edf8f5;border-radius:3mm;padding:2mm 3mm;font-size:13pt}
-.toc-group-heading>b .book-icon{width:7mm;height:7mm}
+
+
 .sub-number{font-size:10pt;color:#247f86}
 .technical-figure figcaption{font-size:8.5pt;color:#49677b}
 
 .chapter-kicker>div{margin-right:4mm}
-.toc-group-heading>div{margin-right:4mm}
-.toc-group-heading>b>span{display:none}
+
+
 .interview-mark{float:right;display:block;margin:1mm 0 0 2mm;line-height:1}
 .interview-mark>span{display:none}
 .exercise{break-before:avoid}
@@ -85,3 +63,16 @@ h4{font-size:11pt;line-height:1.85}.interview-card h4{bookmark-label:content()}
 .flow-fit .interview-card{margin:3mm 0;padding:3mm 4mm;line-height:1.85}
 .flow-fit .interview-card p{margin:0}
 .flow-fit .exercise{margin-top:4mm;padding-bottom:2.5mm}
+
+.contents{break-before:page;break-after:page}
+/* Standard chapter-level contents: one label, a real leader, one page number. */
+.contents h1{font-size:27pt;margin:0 0 10mm;bookmark-level:1}
+.contents-kicker{font-size:9pt;color:#537181;margin:0 0 2mm}
+.contents-group{margin-bottom:10mm}
+.contents-group h2{bookmark-level:none;font-size:13pt;color:#15747b;margin:0 0 4mm;padding:0;background:none;border:0}
+.contents .toc-entry{display:block;direction:rtl;text-align:right;color:#233d53;font-size:12pt;line-height:1.9;margin:3mm 0;padding:0;border:0;text-decoration:none;break-inside:avoid}
+.contents .toc-entry span{font-weight:550}
+.contents .toc-entry::after{content:' ' leader('.') ' ' target-counter(attr(href),page,persian);color:#647e8c;font-size:11.5pt;font-weight:400}
+@page{@top-right{content:'n8n · مرجع فارسی';font-size:7.5pt;border:0;color:#577283}@top-left{content:none;border:0}@bottom-left{content:none;border:0}@bottom-right{content:none;border:0}@bottom-center{content:counter(page,persian);border:0;background:none;color:#416673;font-size:9pt}}
+@page cover{@top-right{content:none}@bottom-center{content:none}}
+@page back{@top-right{content:none}@bottom-center{content:none}}

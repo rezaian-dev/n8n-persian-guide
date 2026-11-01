@@ -16,11 +16,14 @@ assert len(re.findall(r'^### سناریوی ',source,re.M))==24
 assert meta['interview_questions']==76 and meta['chapters']==26 and meta['projects']==3
 assert len(meta['chapter_pages'])==len(re.findall(r'^## ',source,re.M))
 assert meta['chapter_pages'][0]==meta['toc_pages']+3
+assert meta['toc_pages']==3
+assert sum(page.get_text().count('.') for page in pdf[2:5])>=100, 'Missing dotted leaders'
+assert sum(len(page.get_links()) for page in pdf[2:5])>=29, 'Missing chapter destinations'
 assert meta['chapter_icons']==26 and meta['pdf_icons']==29
 assert len(pdf.get_toc())>=190, 'Missing hierarchical bookmarks'
 assert all(len(page.get_text().strip())>30 for page in pdf), 'Empty or image-only page'
 internal=[link for page in pdf for link in page.get_links() if link.get('page',-1)>=0]
-assert len(internal)>=110
+assert len(internal)>=29
 assert all(link['page']<len(pdf) for link in internal)
 for i,page in enumerate(pdf):
  for block in page.get_text('dict')['blocks']:
