@@ -24,6 +24,8 @@ The cover is entirely flat: an AI-generated conceptual automation illustration, 
 
 The website is a **book introduction and download page**, not a duplicate full-text reader. It features real PDF previews, chapter-to-PDF links, a responsive book presentation, and locally bundled **Motion 14.9.0** animations. Reduced-motion preferences are respected. No CDN, analytics, tracking, or runtime framework is required.
 
+The reference-edition website adds a flat editorial hero, three selectable reading paths, client-side chapter search with Persian/Arabic character normalization, keyboard-accessible large-page previews, an interview sample, and a mobile download strip. Core downloads and native contents still work without JavaScript. Desktop, mobile (including 320px), reduced-motion and no-JavaScript paths were checked.
+
 **Documentation reviewed:** November 1, 2026. **Example baseline:** n8n 2.45.7. These are dated references, not a claim that this version will always be current.
 
 ## Read, then build
@@ -117,6 +119,10 @@ The distributed images are already included; normal reading, website hosting, an
 ```
 
 There is one distributed PDF and no duplicate HTML reader, duplicate deployment documentation, dependency directories, private environment files, or test screenshots in the repository. The generated website and publication assets are retained because GitHub Pages serves them directly.
+
+## Repository language statistics
+
+`.gitattributes` keeps the GitHub Languages bar focused on the reader-facing **HTML, CSS and JavaScript**. Python publication scripts, isolated learning labs, tests, deployment configuration and build-only templates are excluded from language detection. Bundled Motion is marked as third-party vendored code. These settings do not rename, delete or convert any source files. GitHub recomputes the bar after the attributes reach the default branch; its cached display may take time to refresh.
 
 ## Publishing
 

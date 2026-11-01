@@ -1,0 +1,18 @@
+# The language bar represents the reader-facing website, not publication tooling.
+# Keep all build scripts and learning labs usable; only exclude their statistics.
+*.py linguist-detectable=false
+*.yaml linguist-detectable=false
+*.yml linguist-detectable=false
+*.toml linguist-detectable=false
+requirements.txt linguist-detectable=false
+scripts/book.css linguist-detectable=false
+scripts/landing.html linguist-detectable=false
+examples/** linguist-detectable=false
+projects/** linguist-detectable=false
+tests/** linguist-detectable=false
+# Third-party distribution code must not dominate the project's language totals.
+docs/assets/vendor/** linguist-vendored=true
+# Commit the built website for Pages, but keep the reader-facing language signals.
+docs/index.html linguist-generated=false
+docs/assets/landing.css linguist-generated=false
+docs/assets/landing.js linguist-generated=false

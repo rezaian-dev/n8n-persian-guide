@@ -26,7 +26,15 @@ for filename in ['index.html']:
     other=Check();other.feed((ROOT/'docs'/path).read_text());assert fragment in other.ids,ref
  assert page.images>=2
  print(f'{filename}: {len(page.ids)} unique ids, {len(page.refs)} references checked.')
-for f in ['guide.md','README.md','SECURITY.md','LICENSE.md','deploy/.env.example','workflows/lead-intake.json','docs/N8N-Persian-Guide.pdf']:
+for f in ['guide.md','README.md','SECURITY.md','LICENSE.md','deploy/.env.example','workflows/lead-intake.json','docs/N8N-Persian-Guide.pdf','.gitattributes']:
  assert (ROOT/f).is_file(),f'Missing required file: {f}'
 json.loads((ROOT/'workflows/lead-intake.json').read_text())
 print('All local link and required-file checks passed.')
+
+attributes=(ROOT/'.gitattributes').read_text()
+assert '*.py linguist-detectable=false' in attributes
+assert 'docs/assets/vendor/** linguist-vendored=true' in attributes
+landing=(ROOT/'docs/index.html').read_text()
+assert 'cover-3d' not in landing
+assert all(f'id="{key}"' in landing for key in ['chapter-search','page-preview','mobile-download'])
+print('Flat-cover, progressive-enhancement and Linguist configuration checks passed.')

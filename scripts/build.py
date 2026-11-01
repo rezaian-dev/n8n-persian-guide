@@ -13,7 +13,7 @@ for number,title,subtitle,start,end in groups:
     links=''.join(f'<li><a class="chapter-link" href="N8N-Persian-Guide.pdf#page={meta["chapter_pages"][i-1]}" target="_blank" rel="noopener"><span class="chapter-number">{fa(f"{i:02d}")}</span><span>{re.sub(r"^[۰-۹0-9]+[.\s]+", "", titles[i-1])}</span><small>ص. {fa(meta["chapter_pages"][i-1])}</small></a></li>' for i in range(start,end+1))
     modules.append(f'<details class="module"><summary><span class="module-number">{number}</span><span><b>{title}</b><small>{subtitle}</small></span><i aria-hidden="true">+</i></summary><ol>{links}</ol></details>')
 landing=(ROOT/'scripts/landing.html').read_text()
-values={'MODULES':''.join(modules),'PAGES_EN':str(meta['pages']),'PAGES_FA':fa(meta['pages']),'SIZE':fa(f"{meta['bytes']/1048576:.2f}"),'SAMPLE1':str(meta['sample_pages'][1]),'SAMPLE2':str(meta['sample_pages'][2])}
+values={'MODULES':''.join(modules),'PAGES_EN':str(meta['pages']),'PAGES_FA':fa(meta['pages']),'SIZE':fa(f"{meta['bytes']/1048576:.2f}"),'APPENDIX':str(meta['chapter_pages'][26]),'APPENDIX_FA':fa(meta['chapter_pages'][26]),'SAMPLE1':str(meta['sample_pages'][1]),'SAMPLE2':str(meta['sample_pages'][2])}
 for key,value in values.items():landing=landing.replace('{{'+key+'}}',value)
 (ROOT/'docs/index.html').write_text(landing)
 assert '{{' not in landing, 'Unresolved template variable'
