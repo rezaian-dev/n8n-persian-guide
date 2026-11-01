@@ -1,78 +1,127 @@
-@font-face{font-family:Vazirmatn;src:url('docs/assets/Vazirmatn.woff2');font-weight:100 900}@page{size:A4;margin:18mm 17mm 21mm;@bottom-center{content:counter(page);font-family:Vazirmatn;font-size:8pt;color:#a47113;border:.6pt solid #e3b85f;border-radius:4mm;width:9mm;height:11mm;vertical-align:middle;margin-bottom:3mm}@bottom-right{content:string(chapter);font-family:Vazirmatn;font-size:6pt;color:#8391a8;vertical-align:middle;border-top:.4pt solid #e5e9f1;padding-top:2mm;margin-bottom:5mm}@bottom-left{content:'n8n / راهنمای جامع فارسی';font-family:Vazirmatn;font-size:6pt;color:#8391a8;vertical-align:middle;border-top:.4pt solid #e5e9f1;padding-top:2mm;margin-bottom:5mm}}@page cover{margin:0;@bottom-center{content:none;border:0}@bottom-right{content:none;border:0}@bottom-left{content:none;border:0}}@page back{margin:0;@bottom-center{content:none;border:0}@bottom-right{content:none;border:0}@bottom-left{content:none;border:0}}*{box-sizing:border-box}html{direction:rtl}body{margin:0;color:#263550;font-family:Vazirmatn,sans-serif;font-size:10.2pt;line-height:1.95}p{margin:3.2mm 0;orphans:3;widows:3}strong{font-weight:750}a{color:#a67517;text-decoration:none;overflow-wrap:anywhere}h1,h2,h3{color:#16243f;line-height:1.6;break-after:avoid}h1{font-size:25pt;font-weight:850;margin:0 0 7mm;letter-spacing:-.3pt}h2.chapter{string-set:chapter content();font-size:20pt;line-height:1.65;font-weight:850;border-bottom:1.3pt solid #c88b14;padding-bottom:3.2mm;margin:0 0 6mm;bookmark-level:1}h3{font-size:11pt;font-weight:800;background:linear-gradient(to left,#fff6df,#fff);border-right:2pt solid #c58b18;border-radius:.8mm;padding:2mm 3mm;margin:6mm 0 3mm;bookmark-level:2}ul,ol{padding-right:5mm;margin:2.4mm 0}li{margin:1.3mm 0;orphans:2;widows:2}li::marker{color:#c08b21}blockquote{background:#f2f5fb;border-right:2pt solid #34466e;border-radius:1.5mm;padding:3mm 4mm;margin:4mm 0;font-size:9pt}.page-chapter{break-before:page}.chapter-kicker{display:flex;align-items:baseline;margin-bottom:2mm;gap:3mm;color:#8e9bb1;font-size:7pt}.chapter-kicker b{font:700 14pt 'DejaVu Sans Mono',monospace;color:#bc861a;margin-left:3mm}.objectives{background:#fff8e6;border-right:2pt solid #c58b18;border-radius:2mm;padding:3mm 4mm;margin:0 0 6mm;break-inside:avoid;font-size:8.4pt;line-height:1.8}.objectives>strong{color:#986414;font-size:9pt;display:block;margin-bottom:1mm}.objectives ul{margin:1mm 0;padding-right:4mm}.objectives li{margin:.8mm 0}.exercise{background:#fffdf7;border:.6pt solid #e3bd6f;border-radius:2.2mm;padding:0 4mm 3mm;margin:7mm 0 0;break-inside:avoid;font-size:8.5pt;line-height:1.9}.exercise-label{color:#94600e;background:#fff5da;margin:0 -4mm 2mm;padding:2mm 4mm;font-weight:800;border-radius:2.2mm 2.2mm 0 0}.exercise p{margin:2mm 0}.exercise .acceptance{border-top:.5pt solid #efdfbf;padding-top:2mm;color:#5b6380}.technical-figure{margin:5mm 0 6mm;break-inside:avoid}.technical-figure img{width:100%;height:auto;border:.6pt solid #dce4ef;border-radius:2mm;display:block}.technical-figure figcaption{font-size:7pt;color:#8996ab;line-height:1.7;margin-top:2mm;text-align:center}.code-window{direction:ltr;text-align:left;background:#182234;border-radius:2.5mm;overflow:hidden;margin:5mm 0;break-inside:avoid;border:.4pt solid #29364b}.code-toolbar{direction:ltr;display:flex;align-items:center;background:#233149;padding:2.3mm 3.2mm;font:6.5pt 'DejaVu Sans Mono',monospace;color:#a8b8cf;line-height:1.5}.traffic{display:inline-block;white-space:nowrap;margin-right:3mm}.traffic i{display:inline-block;height:2mm;width:2mm;border-radius:50%;background:#fd645e;margin-right:1mm}.traffic i:nth-child(2){background:#e9b841}.traffic i:nth-child(3){background:#58c883}.code-toolbar b{font-weight:400;font-size:6pt;letter-spacing:.4pt}.code-toolbar small{margin-left:auto;font-family:Vazirmatn;font-size:6pt;color:#c0d8b3;border:.4pt solid #4b6755;padding:.5mm 2mm;border-radius:1.5mm}pre{direction:ltr;text-align:left;unicode-bidi:embed;white-space:pre-wrap;overflow-wrap:anywhere;padding:3.5mm 4mm;margin:0;color:#d5deeb;background:#182234;font-family:'DejaVu Sans Mono',monospace;font-size:7.8pt;line-height:1.8;tab-size:2}code{font-family:'DejaVu Sans Mono',monospace;font-size:.82em}p code,li code,td code{direction:ltr;unicode-bidi:embed;color:#2b5991;background:#f0f4fa;padding:0 .5mm;border-radius:.5mm}table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:8.6pt;line-height:1.85;margin:5mm 0}th{background:#121d35;color:white;font-weight:700}td,th{padding:2.2mm 2.5mm;border:.4pt solid #dce4ee;text-align:right;vertical-align:top;overflow-wrap:anywhere}tr:nth-child(even) td{background:#f2f6fc}tr{break-inside:avoid}thead{display:table-header-group}.reference-page{break-before:page}.reference-page p{font-size:10pt}.ltr{display:block;direction:ltr;unicode-bidi:embed;text-align:right;font-family:monospace;font-size:8pt}.overline{direction:ltr;text-align:right;font:7pt monospace;letter-spacing:2pt;color:#ad7c17;margin:0 0 6mm}.muted{color:#7a89a1}.small{font-size:7.6pt;color:#7c89a1}.imprint{break-before:page;break-after:page}.imprint .large{font-size:16pt;line-height:1.9;color:#22354d;margin-bottom:7mm}.imprint h2{font-size:13pt;bookmark-level:none;margin:7mm 0 3mm}.edition{background:#f2f5fa;border-right:2pt solid #c48c21;border-radius:2mm;padding:3mm 5mm;margin:6mm 0}.edition p{margin:2mm 0}.cover{page:cover;height:297mm;position:relative;overflow:hidden;padding:39mm 22mm 15mm;background:linear-gradient(150deg,#0e172b,#14233d 72%,#112a3b);color:#f6f5f0;text-align:center;break-after:page}.cover-code{position:absolute;top:15mm;left:14mm;text-align:left;font-family:'DejaVu Sans Mono',monospace;font-size:7pt;line-height:2.5;color:#20334f;white-space:pre;letter-spacing:.2pt}.cover-overline{position:relative;font-family:monospace;direction:ltr;color:#8fa1bc;font-size:7pt;letter-spacing:2pt;margin:5mm 0 8mm}.cover-logo{display:inline-block;position:relative;background:#eb806b;color:#16213a;border:4pt solid #35405a;border-radius:7mm;font-family:Vazirmatn,sans-serif;font-size:24pt;line-height:1.6;font-weight:850;padding:2.5mm 5mm}.cover-kicker{font-size:15pt;color:#dce2ed;position:relative;margin:8mm 0 3mm}.cover h1{font-size:32pt;font-weight:900;line-height:1.65;color:#fff;position:relative;margin:0;bookmark-level:none}.cover h1 em{font-style:normal;color:#f3cb7c}.cover-subtitle{font-size:13pt;color:#cad7ec;margin:7mm 0 5mm}.cover-desc{font-size:9pt;color:#8da2bd;line-height:2.2;margin:0}.cover-tags{margin-top:10mm;direction:rtl}.cover-tags span{display:inline-block;padding:2mm 3mm;border:.6pt solid #43516a;border-radius:4mm;color:#e3bd64;font-size:7pt;margin:0 1mm}.cover-author{position:absolute;left:22mm;right:22mm;bottom:31mm;padding:5mm 6mm;border:.7pt solid #3a4b69;border-radius:4mm;background:#101b31;text-align:right;min-height:29mm}.cover-author img{float:right;width:19mm;height:19mm;object-fit:cover;object-position:center 18%;border-radius:50%;border:1pt solid #be9854;margin-left:6mm}.cover-author>div{margin-right:26mm;padding-top:1mm}.cover-author strong{display:block;color:#fff;font-size:13pt}.cover-author small{display:block;color:#90a5c0;font-size:7pt;margin-top:1.5mm}.cover-bottom{position:absolute;left:22mm;right:22mm;bottom:13mm;border-top:.5pt solid #30425e;padding-top:4mm;font-size:6pt;color:#8499b5;display:flex;justify-content:space-between}.cover-bottom span:first-child{direction:ltr;font-family:monospace}.back-cover{page:back;height:297mm;break-before:page;padding:38mm 23mm;background:#111d33;color:#9fb1ca}.back-cover .overline{color:#dfb667}.back-cover h1{font-size:35pt;line-height:1.75;color:#f1ce88;margin:12mm 0;bookmark-level:none}.back-cover>a{color:#e1b75f;font-size:9pt;margin-top:8mm}.back-author{border-top:.5pt solid #344b6d;margin-top:20mm;padding-top:10mm}.back-author img{width:28mm;height:28mm;border-radius:50%;object-fit:cover;object-position:center 18%;border:1pt solid #b79554}.back-author h2{color:#f7f7f3;font-size:18pt;bookmark-level:none;background:none;border:0;padding:0;margin:6mm 0 2mm}.back-author p{font-family:monospace;font-size:8pt;direction:ltr;text-align:right}.back-author a{color:#e1b75f;font-size:8pt}
-
-/* Flat editorial cover: art, real portrait and searchable type are separate. */
-.cover{padding:20mm 22mm 15mm;background:#0b1c32}
-.cover-overline{margin:0 0 5mm;font-size:6.8pt}
-.cover-logo{background:none;border:0;border-radius:0;color:#fb8171;padding:0;font-size:39pt;line-height:1.3}
-.cover-kicker{font-size:13pt;margin:3mm 0 2mm}
-.cover h1{font-size:27pt;line-height:1.65}
-.cover-subtitle{font-size:10pt;margin:4mm 0 0;color:#a0b6d0}
-.cover-art{position:absolute;top:115mm;left:8mm;width:194mm;height:110mm;object-fit:contain}
-.cover-tags{position:absolute;top:219mm;left:14mm;right:14mm;margin:0}
-.cover-tags span{border:0;background:none;font-size:7.2pt;padding:1mm 3mm}
-.cover-author{bottom:27mm;background:none;border:0;border-top:.5pt solid #34465f;border-radius:0;padding:5mm 0 0}
-.cover-author img{width:18mm;height:18mm}
-.cover-author strong{font-size:12pt}
-.cover-author small{font-size:6.8pt}
-.cover-bottom{bottom:10mm}
-.imprint .large{font-size:14pt;line-height:1.8;margin-bottom:5mm}
-.imprint h2{margin:5mm 0 2mm;font-size:11.5pt}
-.imprint{font-size:9pt;line-height:1.8}
-.imprint .edition{margin:4mm 0;padding:2mm 4mm}
-.sub-number{font-size:8pt;color:#ac7c26;margin-left:2mm}
-h4{color:#273c59;font-size:10pt;font-weight:800;line-height:1.85;margin:0 0 2mm;break-after:avoid;bookmark-level:3}
-.interview-card{break-inside:avoid;margin:5mm 0;padding:4mm 4.5mm;background:#f3f6fb;border-right:2pt solid #eb8a75;border-radius:1.5mm;font-size:10pt;line-height:1.95}
+/* Print layout. Millimetre-based rhythm; icons never share a text formatting box. */
+@font-face{font-family:Vazirmatn;src:url('docs/assets/Vazirmatn.woff2');font-weight:100 900}
+@page{
+ size:A4;margin:22mm 17mm 23mm;
+ @top-center{content:element(book-header);width:176mm;vertical-align:bottom;padding-bottom:5mm}
+ @bottom-center{content:counter(page,persian);width:176mm;height:9mm;border-top:.5pt solid #b8d1d4;padding-top:2mm;margin-top:4mm;font-family:Vazirmatn;font-size:9pt;line-height:1.5;color:#355f6a;vertical-align:top;text-align:center}
+}
+@page contents{@top-center{content:none}}
+@page cover{margin:0;@top-center{content:none}@bottom-center{content:none;border:0;padding:0;margin:0}}
+@page back{margin:0;@top-center{content:none}@bottom-center{content:none;border:0;padding:0;margin:0}}
+*{box-sizing:border-box}
+html{direction:rtl}
+body{margin:0;font-family:Vazirmatn,sans-serif;font-size:10.2pt;line-height:1.9;color:#263e53}
+p{margin:3mm 0;orphans:3;widows:3}
+strong{font-weight:750}
+a{color:#176e76;text-decoration:none;overflow-wrap:anywhere}
+h1,h2,h3,h4{color:#17364c;break-after:avoid}
+h1{font-size:26pt;line-height:1.6;font-weight:850;margin:0 0 8mm}
+h2.chapter{string-set:chapter content();font-size:21pt;font-weight:850;line-height:1.65;margin:0 0 6mm;padding-bottom:4mm;border-bottom:.8pt solid #64a3a7;bookmark-level:1}
+h3{font-size:12pt;line-height:1.8;font-weight:800;margin:5mm 0 3mm;padding:2mm 3mm;background:#f0f8f7;border-right:2pt solid #328c8e;border-radius:1mm;bookmark-level:2}
+h4{font-size:11pt;line-height:1.85;font-weight:800;margin:0;bookmark-level:3}
+ul,ol{padding-right:5mm;margin:2mm 0}
+li{margin:1mm 0;orphans:2;widows:2}
+li::marker{color:#4e8c8e}
+blockquote{background:#f1f6f9;border-right:2pt solid #668695;border-radius:1.5mm;padding:3mm 4mm;margin:4mm 0;font-size:9.5pt}
+.running-header{position:running(book-header);display:table;table-layout:fixed;width:176mm;border-bottom:.5pt solid #b8d1d4;padding-bottom:2.5mm;font-family:Vazirmatn;line-height:1.6}
+.running-header>span{display:table-cell;vertical-align:middle;text-align:right;color:#52717e;font-size:7.5pt;width:85%}
+.running-header>b{display:table-cell;vertical-align:middle;text-align:left;font:750 11pt Vazirmatn;color:#227a80;width:15%}
+.page-chapter,.reference-page{break-before:page}
+.sub-number{font-size:9pt;color:#397e83;margin-left:2mm}
+/* Fixed icon slots isolate SVGs from RTL text and prevent float/baseline collisions. */
+.book-icon{display:block;width:5mm;height:5mm;margin:0 auto;padding:0}
+.chapter-kicker{display:table;table-layout:fixed;width:100%;margin:0 0 5mm;direction:rtl}
+.chapter-icon-cell{display:table-cell;width:22mm;vertical-align:middle;padding:0 0 0 5mm}
+.chapter-icon-frame{display:block;width:17mm;height:17mm;padding:4mm;border:.6pt solid #bcdad9;border-radius:4mm;background:#eff8f6;line-height:0}
+.chapter-icon-frame .book-icon{width:8.5mm;height:8.5mm;margin:0}
+.chapter-meta{display:table-cell;vertical-align:middle;padding:0 0 0 0}
+.chapter-meta>span{display:block;color:#58727e;font-size:8.5pt;line-height:1.8;margin:0 0 1mm}
+.chapter-meta>b{display:block;color:#167780;font-size:11pt;line-height:1.7;margin:0}
+.panel-title,.question-title{display:table;table-layout:fixed;width:100%;direction:rtl;border-collapse:separate;border-spacing:0;margin:0}
+.icon-slot{display:table-cell;width:9mm;vertical-align:middle;text-align:center;padding:0 0 0 3mm;line-height:0}
+.panel-title>strong,.question-title>h4{display:table-cell;vertical-align:middle;text-align:right;margin:0;padding:0}
+.panel-title>strong{font-size:10.5pt;line-height:1.8;color:#216b72}
+.objectives{background:#f0f8f5;border-right:2pt solid #368f87;border-radius:2mm;padding:3.5mm 4mm;margin:0 0 6mm;break-inside:avoid;font-size:9.5pt;line-height:1.85}
+.objectives .panel-title{margin-bottom:2mm}
+.objectives ul{padding-right:5mm;margin:1mm 0 0}
+.objectives li{margin:1mm 0}
+.exercise{background:#fffdf7;border:.6pt solid #dcc596;border-radius:2mm;padding:0 4mm 3mm;margin:5mm 0 0;break-inside:avoid;break-before:avoid;font-size:9.5pt;line-height:1.9}
+.exercise-label{margin:0 -4mm 2mm;padding:2.5mm 4mm;background:#fbf2df;border-radius:2mm 2mm 0 0}
+.exercise-label .panel-title>strong{color:#7a5b25}
+.exercise p{margin:2.5mm 0}
+.exercise .acceptance{border-top:.4pt solid #e7d8b7;padding-top:2mm;color:#536879}
+.interview-card{background:#f2f7fa;border-right:2pt solid #63a6a9;border-radius:2mm;padding:4mm;margin:4mm 0;break-inside:avoid;font-size:10pt;line-height:1.9}
+.question-title{margin-bottom:2.5mm}
+.question-title .icon-slot{vertical-align:middle;padding-top:0}
 .interview-card p{margin:0}
-.reference-page h3{font-size:10.3pt}
-
-/* Accessible editorial hierarchy: icons are vector paths, never emoji glyphs. */
-@page{@top-right{content:'مرجع جامع و پروژه‌محور n8n';font-family:Vazirmatn;font-size:7.5pt;color:#597286;vertical-align:middle;border-bottom:.4pt solid #dce8eb;padding-bottom:1mm}@top-left{content:'REZAIAN / ENGINEERING REFERENCE';font-family:monospace;font-size:5.7pt;color:#167e83;vertical-align:middle;border-bottom:.4pt solid #dce8eb;padding-bottom:1mm}@bottom-center{content:counter(page,persian);color:#156d74;border:.7pt solid #85b7bd;background:#f2faf9;border-radius:3mm}@bottom-left{content:'n8n / مرجع فارسی';color:#587085}@bottom-right{color:#587085}}
-@page cover{@top-left{content:none;border:0}@top-right{content:none;border:0}}
-@page back{@top-left{content:none;border:0}@top-right{content:none;border:0}}
-a{color:#176e76}h2.chapter{border-color:#20868a;font-size:21pt;color:#152f47}
-h3{background:linear-gradient(to left,#eef8f6,#fff);border-color:#278c8a;font-size:12pt;color:#173b50;padding:2.3mm 3mm}
-.chapter-kicker{display:flex;align-items:center;gap:4mm;margin-bottom:5mm}
-.chapter-icon{width:17mm;height:17mm;border:1pt solid #c6e0df;border-radius:4mm;background:#eef8f6;display:flex;align-items:center;justify-content:center}
-.chapter-icon .book-icon{width:9mm;height:9mm}
-.chapter-kicker>div{padding-right:3mm;display:block}.chapter-kicker>div>span{display:block;font-size:8.5pt;color:#536b80}.chapter-kicker b{display:block;font-family:Vazirmatn;font-size:11pt;color:#13767d;margin:1mm 0 0}
-.book-icon{vertical-align:middle;width:5mm;height:5mm;flex-shrink:0}
-.objectives{background:#eff8f5;border-right:2pt solid #268a82;font-size:9.5pt;line-height:1.85;padding:3.5mm 4mm}
-.objectives>strong{font-size:10.5pt;color:#176e70}.objectives .book-icon{margin-left:2mm}
-.exercise{font-size:9.5pt;line-height:1.95;background:#fffcf4;border-color:#ddc18d}.exercise-label{font-size:10.5pt;background:#fcf2dc;color:#76551c}.exercise-label .book-icon{margin-left:2mm}
-.interview-card{border-color:#57aaa6;border-radius:2mm;background:#f2f8fb;padding:4mm 4.5mm}
-.interview-mark{display:flex;align-items:center;gap:2mm;color:#387c83;margin-bottom:2mm;font-size:8pt}.interview-mark .book-icon{width:4mm;height:4mm}
-h4{font-size:11pt;line-height:1.85}.interview-card h4{bookmark-label:content()}
-
-
-.sub-number{font-size:10pt;color:#247f86}
-.technical-figure figcaption{font-size:8.5pt;color:#49677b}
-
-.chapter-kicker>div{margin-right:4mm}
-
-
-.interview-mark{float:right;display:block;margin:1mm 0 0 2mm;line-height:1}
-.interview-mark>span{display:none}
-.exercise{break-before:avoid}
-
-/* Preserve type size; tighten redundant spacing only where a short tail page occurs. */
+.technical-figure{margin:5mm 0;break-inside:avoid}
+.technical-figure img{display:block;width:100%;height:auto;border:.5pt solid #d5e1e5;border-radius:2mm}
+.technical-figure figcaption{font-size:8.2pt;line-height:1.8;color:#57717f;text-align:center;margin-top:2mm}
+.code-window{direction:ltr;text-align:left;background:#182638;border-radius:2mm;overflow:hidden;border:.4pt solid #2c4054;margin:4mm 0;break-inside:avoid}
+.code-toolbar{display:table;table-layout:fixed;width:100%;background:#23364a;padding:2mm 3mm;direction:ltr;font:6.5pt/1.6 'DejaVu Sans Mono',monospace;color:#c0cddd}
+.code-toolbar>.traffic{display:table-cell;width:18mm;vertical-align:middle}
+.traffic i{display:inline-block;width:2mm;height:2mm;border-radius:50%;background:#eb8a7a;margin-right:1mm}
+.traffic i:nth-child(2){background:#dfbe7e}.traffic i:nth-child(3){background:#83c6b1}
+.code-toolbar>b{display:table-cell;vertical-align:middle;font-weight:400;font-size:6.5pt}
+.code-toolbar>small{display:table-cell;vertical-align:middle;text-align:right;font-family:Vazirmatn;font-size:7pt;color:#b4d9c8;width:28mm}
+pre{direction:ltr;text-align:left;unicode-bidi:embed;white-space:pre-wrap;overflow-wrap:anywhere;padding:3.5mm 4mm;margin:0;color:#d6e1ed;font:7.8pt/1.8 'DejaVu Sans Mono',monospace;tab-size:2}
+code{font-family:'DejaVu Sans Mono',monospace;font-size:.82em}
+p code,li code,td code{direction:ltr;unicode-bidi:embed;color:#245e84;background:#eef4f8;padding:0 .5mm;border-radius:.5mm}
+table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:8.6pt;line-height:1.85;margin:5mm 0}
+th{background:#18394b;color:#fff;font-weight:700}
+td,th{padding:2.3mm 2.5mm;border:.4pt solid #d9e4e9;text-align:right;vertical-align:top;overflow-wrap:anywhere}
+tr:nth-child(even) td{background:#f2f7f8}tr{break-inside:avoid}thead{display:table-header-group}
+.reference-page p{font-size:10pt}
+.ltr{display:block;direction:ltr;unicode-bidi:embed;text-align:right;font:8pt monospace}
+.overline{direction:ltr;text-align:right;font:7pt monospace;letter-spacing:2pt;color:#b58a36;margin:0 0 6mm}
+.small{font-size:7.6pt;line-height:1.9;color:#728693}
+.imprint{break-before:page;break-after:page;font-size:9pt;line-height:1.8}
+.imprint .large{font-size:14pt;line-height:1.85;margin-bottom:5mm}
+.imprint h2{font-size:11.5pt;line-height:1.8;bookmark-level:none;margin:5mm 0 2mm}
+.imprint .edition{background:#f1f6f8;border-right:2pt solid #77a8a9;border-radius:2mm;padding:2mm 4mm;margin:4mm 0}
+.edition p{margin:2mm 0}
+/* Three quiet, chapter-level contents pages. No kicker, index column, or badges. */
+.contents{page:contents;break-before:page;break-after:page}
+.contents h1{font-size:27pt;line-height:1.6;margin:0 0 10mm;bookmark-level:1}
+.contents-group{margin-bottom:10mm}
+.contents-group h2{font-size:13pt;line-height:1.8;color:#257c80;margin:0 0 4mm;padding:0;bookmark-level:none;background:none;border:0}
+.contents .toc-entry{display:block;direction:rtl;text-align:right;color:#294556;font-size:12pt;line-height:1.9;margin:3mm 0;padding:0;border:0;break-inside:avoid}
+.contents .toc-entry span{font-weight:550}
+.contents .toc-entry::after{content:' ' leader('.') ' ' target-counter(attr(href),page,persian);color:#69838d;font-size:11.5pt;font-weight:400}
+/* Chapter-specific spacing retains the same body type size and icon geometry. */
 .flow-fit{line-height:1.85}
-.flow-fit p{margin:2.5mm 0}
-.flow-fit h3{margin-top:4mm;margin-bottom:2.5mm;padding:2mm 3mm}
+.flow-fit p{margin:2.3mm 0}
+.flow-fit h2.chapter{padding-bottom:3mm;margin-bottom:4mm}
+.flow-fit h3{margin:4mm 0 2.5mm;padding:2mm 3mm}
 .flow-fit .objectives{margin-bottom:4mm;padding:3mm 4mm}
-.flow-fit .chapter-kicker{margin-bottom:4mm}
+.flow-fit .chapter-kicker{margin-bottom:3mm}
 .flow-fit .interview-card{margin:3mm 0;padding:3mm 4mm;line-height:1.85}
 .flow-fit .interview-card p{margin:0}
+.flow-fit .question-title{margin-bottom:2mm}
 .flow-fit .exercise{margin-top:4mm;padding-bottom:2.5mm}
-
-.contents{break-before:page;break-after:page}
-/* Standard chapter-level contents: one label, a real leader, one page number. */
-.contents h1{font-size:27pt;margin:0 0 10mm;bookmark-level:1}
-.contents-kicker{font-size:9pt;color:#537181;margin:0 0 2mm}
-.contents-group{margin-bottom:10mm}
-.contents-group h2{bookmark-level:none;font-size:13pt;color:#15747b;margin:0 0 4mm;padding:0;background:none;border:0}
-.contents .toc-entry{display:block;direction:rtl;text-align:right;color:#233d53;font-size:12pt;line-height:1.9;margin:3mm 0;padding:0;border:0;text-decoration:none;break-inside:avoid}
-.contents .toc-entry span{font-weight:550}
-.contents .toc-entry::after{content:' ' leader('.') ' ' target-counter(attr(href),page,persian);color:#647e8c;font-size:11.5pt;font-weight:400}
-@page{@top-right{content:'n8n · مرجع فارسی';font-size:7.5pt;border:0;color:#577283}@top-left{content:none;border:0}@bottom-left{content:none;border:0}@bottom-right{content:none;border:0}@bottom-center{content:counter(page,persian);border:0;background:none;color:#416673;font-size:9pt}}
-@page cover{@top-right{content:none}@bottom-center{content:none}}
-@page back{@top-right{content:none}@bottom-center{content:none}}
+.flow-fit .exercise-label{padding-top:2mm;padding-bottom:2mm}
+/* Flat cover retains the original portrait and separately typeset lettering. */
+.cover{page:cover;height:297mm;position:relative;overflow:hidden;padding:20mm 22mm 15mm;background:#0b1c32;color:#f6f5f0;text-align:center;break-after:page}
+.cover-overline{font:6.8pt monospace;direction:ltr;letter-spacing:2pt;color:#8fa1bc;margin:0 0 5mm}
+.cover-logo{font:850 39pt/1.3 Vazirmatn;color:#fb8171}
+.cover-kicker{font-size:13pt;color:#dce2ed;margin:3mm 0 2mm}
+.cover h1{font-size:27pt;font-weight:900;line-height:1.65;color:white;margin:0;bookmark-level:none}
+.cover h1 em{font-style:normal;color:#f3cb7c}
+.cover-subtitle{font-size:10pt;color:#a0b6d0;margin:4mm 0 0}
+.cover-art{position:absolute;top:115mm;left:8mm;width:194mm;height:110mm;object-fit:contain}
+.cover-tags{position:absolute;top:219mm;left:14mm;right:14mm;margin:0;direction:rtl}
+.cover-tags span{display:inline-block;padding:1mm 3mm;color:#e3bd64;font-size:7.2pt;margin:0 1mm}
+.cover-author{position:absolute;left:22mm;right:22mm;bottom:27mm;padding:5mm 0 0;border-top:.5pt solid #34465f;text-align:right;min-height:29mm}
+.cover-author img{float:right;width:18mm;height:18mm;object-fit:cover;object-position:center 18%;border-radius:50%;border:.8pt solid #be9854}
+.cover-author>div{margin-right:25mm;padding-top:1mm}
+.cover-author strong{display:block;font-size:12pt;color:#fff;line-height:1.8}
+.cover-author small{display:block;font-size:6.8pt;color:#90a5c0;margin-top:1.5mm}
+.cover-bottom{position:absolute;left:22mm;right:22mm;bottom:10mm;border-top:.5pt solid #30425e;padding-top:4mm;display:table;width:166mm;font-size:6pt;color:#8499b5}
+.cover-bottom span{display:table-cell;text-align:left}.cover-bottom span:first-child{direction:ltr;font-family:monospace;text-align:right}
+.back-cover{page:back;height:297mm;break-before:page;padding:38mm 23mm;background:#111d33;color:#9fb1ca}
+.back-cover h1{font-size:35pt;line-height:1.75;color:#f1ce88;margin:12mm 0;bookmark-level:none}
+.back-cover>a{color:#e1b75f;font-size:9pt;margin-top:8mm}
+.back-author{border-top:.5pt solid #344b6d;margin-top:20mm;padding-top:10mm}
+.back-author img{width:28mm;height:28mm;border-radius:50%;object-fit:cover;object-position:center 18%;border:.8pt solid #b79554}
+.back-author h2{color:#f7f7f3;font-size:18pt;bookmark-level:none;background:none;border:0;padding:0;margin:6mm 0 2mm}
+.back-author p{font:8pt monospace;direction:ltr;text-align:right}.back-author a{color:#e1b75f;font-size:8pt}

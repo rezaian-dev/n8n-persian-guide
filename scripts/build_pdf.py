@@ -38,21 +38,21 @@ for i in range(1,len(parts),2):
         prefix=f'<span class="sub-number">{fa(number)}.{fa(index)}</span> ' if number<=26 else ''
         return f'<h3 id="{anchor}">{prefix}{label}</h3>'
     body=re.sub(r'<h3>(.*?)</h3>',anchor_subheading,body)
-    body=re.sub(r'(<h4>.*?</h4>)\s*(<p>.*?</p>)',lambda m:'<div class="interview-card"><div class="interview-mark">'+icon('message')+'<span>تحلیل / مصاحبه</span></div>'+m.group(1)+m.group(2)+'</div>',body,flags=re.S)
+    body=re.sub(r'(<h4>.*?</h4>)\s*(<p>.*?</p>)',lambda m:'<div class="interview-card"><div class="question-title"><span class="icon-slot">'+icon('message')+'</span>'+m.group(1)+'</div>'+m.group(2)+'</div>',body,flags=re.S)
     clean=re.sub(r'^[۰-۹0-9]+[.\s]+','',title)
     if number<=26:
         note=notes[number-1]
         group=next(label for limit,label in groups if number<=limit)
         goals=''.join('<li>'+escape(g)+'</li>' for g in note['goals'])
-        density=" flow-fit" if number in [3,5,6,9,20,21,23] else ""
-        opening=f'<section class="page-chapter{density}"><div class="chapter-kicker"><span class="chapter-icon">{icon(chapter_icons[number-1])}</span><div><span>{group}</span><b>فصل {fa(number)}</b></div></div><h2 class="chapter" id="{key}">{clean}</h2><div class="objectives"><strong>{icon("target")} هدف‌های یادگیری این فصل</strong><ul>{goals}</ul></div>'
+        density=" flow-fit" if number in [3,4,5,6,9,13,20,21,23] else ""
+        opening=f'<section class="page-chapter{density}"><div class="chapter-kicker"><div class="chapter-icon-cell"><div class="chapter-icon-frame">{icon(chapter_icons[number-1])}</div></div><div class="chapter-meta"><span>{group}</span><b>فصل {fa(number)}</b></div></div><h2 class="chapter" id="{key}">{clean}</h2><div class="objectives"><div class="panel-title"><span class="icon-slot">{icon("target")}</span><strong>هدف‌های یادگیری این فصل</strong></div><ul>{goals}</ul></div>'
         if number in figures:
             name,caption=figures[number]
             figure=f'<figure class="technical-figure"><img src="docs/figures/{name}.png" alt="{caption}"><figcaption>تصویر {number} · {caption}</figcaption></figure>'
             # Keep the figure near the opening, before the next major content block.
             position=body.find('</p>')+4
             body=body[:position]+figure+body[position:]
-        ending=f'<div class="exercise"><div class="exercise-label">{icon("experiment")} تمرین و کنترل</div><p>{escape(note["task"])}</p><p class="acceptance"><b>معیار پذیرش:</b> {escape(note["check"])}</p></div></section>'
+        ending=f'<div class="exercise"><div class="exercise-label"><div class="panel-title"><span class="icon-slot">{icon("experiment")}</span><strong>تمرین و کنترل</strong></div></div><p>{escape(note["task"])}</p><p class="acceptance"><b>معیار پذیرش:</b> {escape(note["check"])}</p></div></section>'
     else:
         opening=f'<section class="reference-page"><h2 class="chapter" id="{key}">{clean}</h2>'
         ending='</section>'
@@ -81,14 +81,14 @@ for page_index in range(3):
         cards.append(f'<div class="contents-group"><h2>{group_title}</h2>'+''.join(rows)+'</div>')
     if page_index==2:
         cards.append('<div class="contents-group"><h2>پیوست و منابع</h2>'+''.join(f'<a class="toc-entry" href="#{key}"><span>{title}</span></a>' for key,title in headings[26:])+'</div>')
-    toc_pages.append(f'<section class="contents" id="contents-{page_index+1}"><p class="contents-kicker">۲۶ فصل · مثال، تمرین و تحلیل</p><h1>فهرست مطالب</h1>'+''.join(cards)+'</section>')
+    toc_pages.append(f'<section class="contents" id="contents-{page_index+1}"><h1>فهرست مطالب</h1>'+''.join(cards)+'</section>')
 toc=''.join(toc_pages)
 css=(ROOT/'scripts/book.css').read_text()+'\n'+formatter.get_style_defs('.code-window')
 html='''<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
 <title>مرجع جامع و پروژه‌محور n8n — محمدرضا رضائیان</title>
 <meta name="author" content="Mohammadreza Rezaian — محمدرضا رضائیان">
 <meta name="description" content="راهنمای فارسی n8n؛ اتوماسیون قابل‌اعتماد، API، استقرار امن و هوش مصنوعی کنترل‌شده.">
-<style>'''+css+'''</style></head><body>
+<style>'''+css+'''</style></head><body><div class="running-header"><span>مرجع فارسی اتوماسیون</span><b dir="ltr">n8n</b></div>
 <section class="cover">
  <p class="cover-overline">THE PROJECT-BASED PERSIAN REFERENCE</p>
  <div class="cover-logo" dir="ltr">n8n.</div>
@@ -101,7 +101,7 @@ html='''<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
  <div class="cover-bottom"><span>n8n 2.45.7 · PostgreSQL · API · AI</span><span>ویرایش دوم / نوامبر ۲۰۲۶</span></div>
 </section>
 <section class="imprint">
- <p class="overline">BEFORE YOU START</p><h1>پیش از شروع</h1>
+ <h1>پیش از شروع</h1>
  <p class="large">یک گردش‌کار خوب فقط در روزهای خوب کار نمی‌کند؛ در روزهای سخت هم قابل‌فهم و قابل‌بازیابی است.</p>
  <p>این راهنما برای توسعه‌دهندگان و سازندگان محصول نوشته شده است. مسیر مطالعه از داده و Webhook آغاز می‌شود و به طراحی قابل‌اعتماد، استقرار، امنیت و استفادهٔ کنترل‌شده از هوش مصنوعی می‌رسد.</p>
  <div class="edition"><p><b>نویسنده و گردآورنده:</b> محمدرضا رضائیان</p><p><b>ویرایش:</b> دوم — ۱ نوامبر ۲۰۲۶</p><p><b>مبنای مثال‌ها:</b> n8n 2.45.7، نه تضمین تازه‌ترین نسخه در آینده.</p><p><b>مخزن و فایل‌های همراه:</b><br><a class="ltr" href="https://github.com/rezaian-dev/n8n-persian-guide">github.com/rezaian-dev/n8n-persian-guide</a></p></div>
@@ -115,7 +115,53 @@ html='''<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8">
 <section class="back-cover"><p class="overline">BUILD SMALL. BUILD RELIABLE.</p><h1>یک فرایند کوچک.<br>یک اثر واقعی.</h1><p>فایل گردش‌کار، مثال‌های کد و راهنمای استقرار را از مخزن دریافت کنید. برای گزارش خطا، شمارهٔ بخش و نسخهٔ نرم‌افزار را همراه با نمونهٔ پاک‌سازی‌شده ارسال کنید.</p><a class="ltr" href="https://github.com/rezaian-dev/n8n-persian-guide">github.com/rezaian-dev/n8n-persian-guide</a><div class="back-author"><img src="docs/assets/author.webp" alt="محمدرضا رضائیان"><h2>محمدرضا رضائیان</h2><p>React · Next.js · TypeScript</p><a href="https://rezaian-dev.vercel.app/fa">rezaian-dev.vercel.app</a></div></section>
 </body></html>'''
 output=ROOT/'docs/N8N-Persian-Guide.pdf'
-HTML(string=html,base_url=str(ROOT)).write_pdf(output,presentational_hints=True)
+document=HTML(string=html,base_url=str(ROOT)).render(presentational_hints=True)
+# Geometric preflight: SVGs must occupy their own slots, not a text line.
+icon_count=0
+icon_collisions=[]
+icon_center_errors=[]
+icon_slots_checked=0
+for page_number,page in enumerate(document.pages,1):
+    all_boxes=[]
+    parents={}
+    def walk(box):
+        all_boxes.append(box)
+        for child in getattr(box,'children',[]):
+            parents[id(child)]=box
+            walk(child)
+    walk(page._page_box)
+    svg_boxes=[box for box in all_boxes if getattr(box,'replacement',None) is not None and getattr(box,'element',None) is not None and 'book-icon' in box.element.get('class','').split()]
+    text_boxes=[box for box in all_boxes if type(box).__name__=='TextBox' and getattr(box,'text','').strip()]
+    for svg in svg_boxes:
+        icon_count+=1
+        x,y=svg.content_box_x(),svg.content_box_y()
+        parent=parents.get(id(svg))
+        while parent is not None:
+            element=getattr(parent,'element',None)
+            classes=element.get('class','').split() if element is not None else []
+            if 'icon-slot' in classes or 'chapter-icon-frame' in classes:
+                icon_slots_checked+=1
+                assert x>=parent.content_box_x()-.75 and y>=parent.content_box_y()-.75 and x+svg.width<=parent.content_box_x()+parent.width+.75 and y+svg.height<=parent.content_box_y()+parent.height+.75, f'Icon outside slot on page {page_number}'
+                cx=parent.content_box_x()+parent.width/2
+                cy=parent.content_box_y()+parent.height/2
+                dx=abs(x+svg.width/2-cx)
+                dy=abs(y+svg.height/2-cy)
+                if max(dx,dy)>1:
+                    icon_center_errors.append((page_number,round(dx,2),round(dy,2)))
+                break
+            parent=parents.get(id(parent))
+        for text in text_boxes:
+            tx,ty=text.content_box_x(),text.content_box_y()
+            overlap_x=min(x+svg.width,tx+text.width)-max(x,tx)
+            overlap_y=min(y+svg.height,ty+text.height)-max(y,ty)
+            if overlap_x>.75 and overlap_y>.75:
+                icon_collisions.append((page_number,text.text))
+assert icon_count==130, f'Expected 130 placed learning icons, found {icon_count}'
+assert icon_slots_checked==icon_count, 'An icon has no dedicated layout slot'
+assert not icon_collisions, f'Icon/text overlaps: {icon_collisions}'
+assert not icon_center_errors, f'Icon centering errors: {icon_center_errors}'
+document.write_pdf(output)
+print(f'Icon alignment preflight: {icon_count} vectors, centered in dedicated slots; no text-box overlaps.')
 print(f'Built {output.name}: {output.stat().st_size:,} bytes')
 
 # Render real PDF previews and save metadata for the static landing page.
@@ -129,6 +175,6 @@ for index,name in zip(samples,['cover','sample-01','sample-02']):
     pdf[index].get_pixmap(matrix=fitz.Matrix(1.5,1.5)).save(previews/f'{name}.png')
 layout_files=['scripts/build_pdf.py','scripts/book.css','scripts/book-notes.json','scripts/build_figures.py','docs/assets/cover-art.webp','docs/assets/author.webp','scripts/icons.json']
 layout_hash=hashlib.sha256(b''.join((ROOT/f).read_bytes() for f in layout_files)).hexdigest()
-meta={'pages':len(pdf),'bytes':output.stat().st_size,'edition':'2026-11-01','sample_pages':[x+1 for x in samples],'source_sha256':hashlib.sha256((ROOT/'guide.md').read_bytes()).hexdigest(),'layout_sha256':layout_hash,'chapter_pages':[destinations[f'chapter-{n}']+1 for n in range(1,len(headings)+1)],'illustrations':6,'chapters':26,'interview_questions':76,'source_words':len(source.split()),'projects':3,'toc_pages':destinations['chapter-1']-2,'icons':len(icons),'chapter_icons':26,'pdf_icons':29,'motion_version':'14.9.0'}
+meta={'pages':len(pdf),'bytes':output.stat().st_size,'edition':'2026-11-01','sample_pages':[x+1 for x in samples],'source_sha256':hashlib.sha256((ROOT/'guide.md').read_bytes()).hexdigest(),'layout_sha256':layout_hash,'chapter_pages':[destinations[f'chapter-{n}']+1 for n in range(1,len(headings)+1)],'illustrations':6,'chapters':26,'interview_questions':76,'source_words':len(source.split()),'projects':3,'toc_pages':destinations['chapter-1']-2,'icons':len(icons),'chapter_icons':26,'pdf_icons':29,'placed_icons':icon_count,'icon_text_overlaps':len(icon_collisions),'icon_center_errors':len(icon_center_errors),'icon_slots_checked':icon_slots_checked,'motion_version':'14.9.0'}
 (ROOT/'docs/assets/book-meta.json').write_text(json.dumps(meta,indent=2)+'\n')
 print(f'PDF: {len(pdf)} pages, {len(pdf.get_toc())} bookmarks, previews generated.')

@@ -20,6 +20,8 @@ assert meta['toc_pages']==3
 assert sum(page.get_text().count('.') for page in pdf[2:5])>=100, 'Missing dotted leaders'
 assert sum(len(page.get_links()) for page in pdf[2:5])>=29, 'Missing chapter destinations'
 assert meta['chapter_icons']==26 and meta['pdf_icons']==29
+assert meta['placed_icons']==meta['icon_slots_checked']==130
+assert meta['icon_text_overlaps']==0 and meta['icon_center_errors']==0
 assert len(pdf.get_toc())>=190, 'Missing hierarchical bookmarks'
 assert all(len(page.get_text().strip())>30 for page in pdf), 'Empty or image-only page'
 internal=[link for page in pdf for link in page.get_links() if link.get('page',-1)>=0]
