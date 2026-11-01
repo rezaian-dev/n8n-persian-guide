@@ -1,0 +1,11 @@
+{
+  "name": "n8n-persian-guide",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "build": "python scripts/build.py"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

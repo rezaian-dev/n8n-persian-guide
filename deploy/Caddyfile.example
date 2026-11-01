@@ -1,0 +1,6 @@
+# Example for Caddy installed on the HOST, not inside Docker.
+# Replace the hostname and configure DNS before running Caddy.
+n8n.example.com {
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:5678
+}
