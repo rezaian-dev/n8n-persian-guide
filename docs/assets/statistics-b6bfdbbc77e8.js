@@ -3,22 +3,23 @@
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  const fa=number=>String(number).replace(/\d/g,digit=>'۰۱۲۳۴۵۶۷۸۹'[digit]);
  // Native count-up: one viewport-triggered run, independent of Motion and accessible to screen readers.
- const counters=[...document.querySelectorAll('[data-count]')];
+ const counters=[...document.querySelectorAll('[data-count],[data-count-version]')];
  const counterFrames=new Map();let counterObserver;
  const finalCounters=()=>{
   counterObserver?.disconnect();
   counterFrames.forEach(frame=>cancelAnimationFrame(frame));counterFrames.clear();
-  counters.forEach(el=>{el.textContent=fa(el.dataset.count);el.dataset.counterState='complete'});
+  counters.forEach(el=>{el.textContent=fa(el.dataset.countVersion||el.dataset.count);el.dataset.counterState='complete'});
  };
  const countUp=(el,index)=>{
-  const target=Number(el.dataset.count),duration=2300,start=performance.now()+index*100;
-  el.textContent=fa(0);el.dataset.counterState='running';
+  const targets=(el.dataset.countVersion||el.dataset.count).split('.').map(Number),duration=2300,start=performance.now()+index*100;
+  const render=progress=>fa(targets.map(target=>Math.floor(target*progress)).join('.'));
+  el.textContent=render(0);el.dataset.counterState='running';
   const tick=now=>{
    if(reduced.matches){finalCounters();return}
    const progress=Math.max(0,Math.min(1,(now-start)/duration));
-   el.textContent=fa(Math.floor(target*(1-Math.pow(1-progress,3))));
+   el.textContent=render(1-Math.pow(1-progress,3));
    if(progress<1)counterFrames.set(el,requestAnimationFrame(tick));
-   else {el.textContent=fa(target);el.dataset.counterState='complete';counterFrames.delete(el)}
+   else {el.textContent=render(1);el.dataset.counterState='complete';counterFrames.delete(el)}
   };
   counterFrames.set(el,requestAnimationFrame(tick));
  };
