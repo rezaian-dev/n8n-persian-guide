@@ -25,7 +25,7 @@ body.publication-home,body.publication-reader{background:radial-gradient(ellipse
 html:has(.publication-reader){scroll-behavior:auto}
 
 /* One font for every textual UI element, including Latin/Persian digits and controls. */
-@font-face{font-family:"Publication Vazirmatn";src:url("Vazirmatn.woff2?v=uniform1") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
+@font-face{font-family:"Publication Vazirmatn";src:url("Vazirmatn-33.003-4e3fa217d3.woff2") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
 html,body,body *,body *::before,body *::after,body *::marker,body input::placeholder,body textarea::placeholder,body input::file-selector-button{font-family:"Publication Vazirmatn",sans-serif!important}
 html,body{--font-sans:"Publication Vazirmatn",sans-serif!important;--font-mono:"Publication Vazirmatn",sans-serif!important;--font-vazirmatn:"Publication Vazirmatn"!important;--font-jetbrains:"Publication Vazirmatn"!important}
 code,pre,kbd,samp{font-variant-ligatures:none}output,input[type=number],.tabular-nums{font-variant-numeric:tabular-nums}
