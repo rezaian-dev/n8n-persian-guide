@@ -8,6 +8,6 @@ The original article, editorial notes, website design, examples, technical illus
 
 - **Motion 14.9.0**: MIT. The locally distributed browser bundle and its original license are under `docs/assets/vendor/`.
 - **Vazirmatn**: SIL Open Font License. See `docs/assets/FONT-LICENSE.txt`.
-- Build tools and other dependencies retain their own licenses; the restrictions above do not override rights granted by their licenses.
+- Third-party components retain their own licenses; the restrictions above do not override rights granted by their licenses.
 
 This repository does not redistribute the n8n application. n8n and other product names and marks belong to their respective owners. n8n uses separate Sustainable Use / Enterprise licensing. This guide is independent and is not an official or endorsed n8n publication.

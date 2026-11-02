@@ -1,4 +1,0 @@
-Markdown==3.9
-weasyprint==66.0
-PyMuPDF==1.26.5
-Pygments==2.21.0
