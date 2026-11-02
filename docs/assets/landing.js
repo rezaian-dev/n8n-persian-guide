@@ -32,7 +32,7 @@
    if(!entry)return;
    links.forEach(link=>{if(link.hash==='#'+entry.target.id)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current')});
   },{rootMargin:'-15% 0px -60% 0px',threshold:0});
-  links.forEach(link=>{const target=document.querySelector(link.hash);if(target)observer.observe(target)});
+  links.forEach(link=>{const target=link.hash?document.getElementById(link.hash.slice(1)):null;if(target)observer.observe(target)});
  }
 
  document.querySelector('#theme')?.addEventListener('click',()=>{

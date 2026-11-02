@@ -14,19 +14,23 @@ class Check(HTMLParser):
    if key in a:self.refs.append(a[key])
   if tag=='img':assert a.get('alt'), 'Image missing alt';self.images+=1
 
-for filename in ['index.html']:
+for filename in ['index.html', 'book/index.html']:
+ base=(ROOT/'docs'/filename).parent
  page=Check();page.feed((ROOT/'docs'/filename).read_text())
  for ref in page.refs:
   if ref.startswith('#'):
    if ref!='#':assert ref[1:] in page.ids,f'Missing anchor: {ref}'
   elif not ref.startswith(('https:','http:','mailto:','data:')):
    path,_,fragment=ref.partition('#')
-   assert (ROOT/'docs'/path).is_file(),f'Missing local asset: {ref}'
-   if fragment and path.endswith('.html'):
-    other=Check();other.feed((ROOT/'docs'/path).read_text());assert fragment in other.ids,ref
+   target=(base/path).resolve()
+   if target.is_dir():target=target/'index.html'
+   assert target.is_relative_to(ROOT/'docs'), f'Unexpected path outside publication: {ref}'
+   assert target.is_file(),f'Missing local asset: {ref}'
+   if fragment and target.suffix=='.html':
+    other=Check();other.feed(target.read_text());assert fragment in other.ids,ref
  assert page.images>=2
  print(f'{filename}: {len(page.ids)} unique ids, {len(page.refs)} references checked.')
-for f in ['guide.md','README.md','LICENSE.md','deploy/.env.example','workflows/lead-intake.json','docs/N8N-Persian-Guide.pdf','.gitattributes']:
+for f in ['guide.md','README.md','LICENSE.md','deploy/.env.example','workflows/lead-intake.json','docs/N8N-Persian-Guide.pdf','docs/N8N-Persian-Guide.epub','docs/book/index.html','docs/assets/reader.css','docs/assets/reader.js','.gitattributes']:
  assert (ROOT/f).is_file(),f'Missing required file: {f}'
 json.loads((ROOT/'workflows/lead-intake.json').read_text())
 print('All local link and required-file checks passed.')
@@ -80,3 +84,63 @@ for i,page in enumerate(pdf):
 print(f'PDF audit passed: {len(pdf)} pages, {len(pdf.get_toc())} bookmarks; source hash, searchable text, internal links and page bounds verified.')
 
 pdf.close()
+
+# Basic package integrity is checked on every build; EPUBCheck remains an independent check.
+import zipfile, posixpath
+import xml.etree.ElementTree as ET
+from urllib.parse import urlsplit, unquote
+reader=(ROOT/'docs/book/index.html').read_text()
+source_hash=hashlib.sha256((ROOT/'guide.md').read_bytes()).hexdigest()
+assert f'name="source-sha256" content="{source_hash}"' in reader, 'Online reader is stale'
+assert reader.count('class="reader-chapter"')==29
+assert all(f'id="chapter-{n}"' in reader for n in range(1,30))
+assert 'canvas' not in reader
+assert all(f'id="{name}"' in reader for name in ['reader-toc','reader-search','reader-theme','reader-resume','font-more','font-less'])
+ns={'p':'http://www.idpf.org/2007/opf','x':'http://www.w3.org/1999/xhtml','dc':'http://purl.org/dc/elements/1.1/'}
+with zipfile.ZipFile(ROOT/'docs/N8N-Persian-Guide.epub') as archive:
+ names=set(archive.namelist())
+ assert len(names)==len(archive.namelist()), 'Duplicate archive entries'
+ first=archive.infolist()[0]
+ assert first.filename=='mimetype' and first.compress_type==zipfile.ZIP_STORED
+ assert archive.read('mimetype')==b'application/epub+zip'
+ assert archive.testzip() is None
+ container=ET.fromstring(archive.read('META-INF/container.xml'))
+ package_path=container.find('.//{urn:oasis:names:tc:opendocument:xmlns:container}rootfile').get('full-path')
+ package=ET.fromstring(archive.read(package_path));assert package.get('version')=='3.0'
+ assert package.find('p:metadata/dc:language',ns).text=='fa'
+ assert package.find('p:metadata/dc:source',ns).text=='urn:sha256:'+source_hash, 'EPUB is stale'
+ assert package.find('p:spine',ns).get('page-progression-direction')=='rtl'
+ manifest={item.get('id'):item for item in package.findall('p:manifest/p:item',ns)}
+ paths={posixpath.normpath('EPUB/'+item.get('href')) for item in manifest.values()}
+ assert all(path in names for path in paths)
+ assert paths==names-{'mimetype','META-INF/container.xml',package_path}, 'Unmanifested EPUB asset'
+ assert len([item for item in manifest.values() if item.get('properties')=='cover-image'])==1
+ assert len([item for item in manifest.values() if item.get('properties')=='nav'])==1
+ spine=package.findall('p:spine/p:itemref',ns)
+ assert len(spine)==32 and all(item.get('idref') in manifest for item in spine)
+ documents={path:ET.fromstring(archive.read(path)) for path in paths if path.endswith('.xhtml')}
+ for path,document in documents.items():
+  assert document.get('dir')=='rtl' and document.get('lang')=='fa'
+  assert not document.findall('.//x:script',ns), 'EPUB must not contain scripts'
+  ids=[element.get('id') for element in document.iter() if element.get('id')]
+  assert len(ids)==len(set(ids)), f'Duplicate XHTML ids: {path}'
+  for element in document.iter():
+   for key in ['href','src']:
+    ref=element.get(key)
+    if not ref:continue
+    url=urlsplit(ref)
+    if url.scheme:continue
+    target=posixpath.normpath(posixpath.join(posixpath.dirname(path),unquote(url.path))) if url.path else path
+    assert target in names, f'Missing EPUB resource {path}: {ref}'
+    if url.fragment:
+     assert any(node.get('id')==unquote(url.fragment) for node in documents[target].iter()), f'Missing EPUB anchor: {ref}'
+  if path.startswith('EPUB/chapter-'):
+   number=int(Path(path).stem.split('-')[1])
+   assert document.find('.//x:h1',ns).text==re.findall(r'^## (.+)$',source,re.M)[number-1]
+   assert len(''.join(document.itertext()).strip())>100
+ toc=documents['EPUB/nav.xhtml'].find('.//x:nav',ns)
+ assert toc.get('{http://www.idpf.org/2007/ops}type')=='toc'
+ assert len(toc.findall('.//x:a',ns))==31
+ for internal,local in [('font.woff2','assets/Vazirmatn.woff2'),('font-license.txt','assets/FONT-LICENSE.txt'),('cover.png','previews/cover.png')]+[(f'figures/{name}.png',f'figures/{name}.png') for name in ['flow','webhook','idempotency','infrastructure','rag','human']]:
+  assert archive.read('EPUB/'+internal)==(ROOT/'docs'/local).read_bytes(), f'Stale EPUB asset: {internal}'
+print('Reader and EPUB audit passed: 29 complete sections, source hashes, RTL spine, nav, XHTML, assets and internal links.')

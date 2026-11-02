@@ -20,3 +20,7 @@ docs/assets/landing.js linguist-generated=false
 # Source-of-publication files are necessary tooling, not the website implementation.
 scripts/** linguist-detectable=false
 .github/** linguist-detectable=false
+
+docs/book/index.html linguist-generated=false
+docs/assets/reader.css linguist-generated=false
+docs/assets/reader.js linguist-generated=false

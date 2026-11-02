@@ -21,4 +21,4 @@ jobs:
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
       - run: python scripts/build.py
       - run: python scripts/check.py
-      - run: git diff --exit-code -- docs/index.html
+      - run: git diff --exit-code -- docs/index.html docs/book/index.html docs/N8N-Persian-Guide.epub
