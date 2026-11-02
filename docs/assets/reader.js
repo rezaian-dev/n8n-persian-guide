@@ -6,24 +6,21 @@
   const fa = number => String(number).replace(/\d/g, digit => '۰۱۲۳۴۵۶۷۸۹'[digit]);
   const theme = $('reader-theme');
   theme.hidden = false;
-  const themeLabel = () => {theme.textContent = root.dataset.theme === 'dark' ? 'تم روشن' : 'تم تیره'; theme.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));};
+  const themeLabel = () => {const label = root.dataset.theme === 'dark' ? 'فعال‌کردن تم روشن' : 'فعال‌کردن تم تیره';theme.innerHTML = '<svg class="interface-icon theme-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1 1m12 12 1 1M5 19l1-1M18 6l1-1"/></svg><svg class="interface-icon theme-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 13.2A9 9 0 0 1 10.8 3a9 9 0 1 0 10 10.2Z"/><path d="M17 3v4m-2-2h4"/></svg>';theme.setAttribute('aria-label', label);theme.title = label;theme.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));};
   themeLabel();
-  theme.addEventListener('click', () => {root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';store.set('n8n-reader-theme', root.dataset.theme);themeLabel();});
+  theme.addEventListener('click', () => {root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';store.set('n8n-theme', root.dataset.theme);store.set('n8n-reader-theme', root.dataset.theme);themeLabel();});
   document.querySelector('.reader-tools').hidden = false;
-  let size = Number(store.get('n8n-reader-size')) || 18;
-  if (size < 14 || size > 24) size = 18;
-  const resize = () => {root.style.setProperty('--reading-size', `${size}px`);$('font-value').value = fa(size);$('font-less').disabled = size <= 14;$('font-more').disabled = size >= 24;store.set('n8n-reader-size', size);};
-  $('font-less').addEventListener('click', () => {size = Math.max(14, size - 1);resize();});
+  let size = Number(store.get('n8n-reader-size')) || 20;
+  if (size < 16 || size > 24) size = 20;
+  const resize = () => {root.style.setProperty('--reading-size', `${size}px`);$('font-value').value = fa(size);$('font-less').disabled = size <= 16;$('font-more').disabled = size >= 24;store.set('n8n-reader-size', size);};
+  $('font-less').addEventListener('click', () => {size = Math.max(16, size - 1);resize();});
   $('font-more').addEventListener('click', () => {size = Math.min(24, size + 1);resize();});
   resize();
 
   const toc = $('reader-toc');
-  const mobile = window.matchMedia('(max-width:760px)');
-  toc.open = !mobile.matches;
-  mobile.addEventListener('change', () => {toc.open = !mobile.matches;});
+  toc.open = true;
   const chapters = [...document.querySelectorAll('.reader-chapter')];
   const links = [...toc.querySelectorAll('a')];
-  links.forEach(link => link.addEventListener('click', () => {if (mobile.matches) toc.open = false;}));
   const saved = store.get('n8n-reader-chapter');
   if (chapters.some(chapter => chapter.id === saved)) {
     const resume = $('reader-resume');

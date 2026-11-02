@@ -12,20 +12,7 @@
  const header=document.querySelector('.site-header');
  const menu=document.querySelector('#menu-toggle');
  const nav=document.querySelector('#primary-nav');
- const small=matchMedia('(max-width:900px)');
- let menuOpen=false;
- const syncMenu=()=>{
-  nav.hidden=small.matches&&!menuOpen;
-  menu.setAttribute('aria-expanded',String(small.matches&&menuOpen));
-  menu.setAttribute('aria-label',menuOpen?'بستن منو':'بازکردن منو');
- };
  if(header&&menu&&nav){
-  header.classList.add('enhanced');menu.hidden=false;syncMenu();
-  menu.addEventListener('click',()=>{menuOpen=!menuOpen;syncMenu()});
-  small.addEventListener('change',()=>{menuOpen=false;syncMenu()});
-  nav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menuOpen=false;syncMenu()}));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menuOpen){menuOpen=false;syncMenu();menu.focus()}});
-  document.addEventListener('click',e=>{if(menuOpen&&!header.contains(e.target)){menuOpen=false;syncMenu()}});
   const links=[...nav.querySelectorAll('a')];
   const observer=new IntersectionObserver(entries=>{
    const entry=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
@@ -38,7 +25,7 @@
  document.querySelector('#theme')?.addEventListener('click',()=>{
   const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';
   document.documentElement.dataset.theme=theme;syncTheme();
-  try{localStorage.setItem('n8n-guide-theme',theme)}catch{}
+  try{localStorage.setItem('n8n-theme',theme);localStorage.setItem('n8n-guide-theme',theme)}catch{}
  });
  const progress=document.querySelector('#reading-progress');
  const updateProgress=()=>{
