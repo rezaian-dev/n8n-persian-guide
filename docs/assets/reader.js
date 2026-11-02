@@ -48,12 +48,16 @@
     const code = pre.querySelector('code');
     if (!code || !navigator.clipboard || !window.isSecureContext) return;
     const button = document.createElement('button');
-    button.type = 'button';button.className = 'copy-code';button.textContent = 'کپی کد';
+    button.type = 'button';button.className = 'copy-code';
+    const copyIcon = "<svg class=\"interface-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><rect x=\"8\" y=\"8\" width=\"13\" height=\"13\" rx=\"2\"/><path d=\"M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3\"/></svg>";
+    const checkIcon = "<svg class=\"interface-icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\" focusable=\"false\"><path d=\"m5 12 4 4L19 6\"/></svg>";
+    const setCopyLabel = (label, done = false) => {button.innerHTML = (done ? checkIcon : copyIcon);const text = document.createElement('span');text.textContent = label;button.append(text);button.setAttribute('aria-label',label);};
+    setCopyLabel('کپی کد');
     button.setAttribute('aria-label', 'کپی کردن این قطعه کد');
     button.addEventListener('click', async () => {
-      try {await navigator.clipboard.writeText(code.textContent);button.textContent = 'کپی شد ✓';}
-      catch {button.textContent = 'کپی نشد؛ متن را انتخاب کنید';}
-      setTimeout(() => {button.textContent = 'کپی کد';}, 2200);
+      try {await navigator.clipboard.writeText(code.textContent);setCopyLabel('کپی شد', true);}
+      catch {setCopyLabel('کپی نشد؛ متن را انتخاب کنید');}
+      setTimeout(() => {setCopyLabel('کپی کد');}, 2200);
     });
     pre.prepend(button);
   });
