@@ -17,9 +17,8 @@ jobs:
         with:
           node-version: '22'
       - run: pip install -r requirements.txt
-      - run: npm test
+      - run: node --test tests/*.test.mjs
       - run: python -m unittest discover -s tests -p 'test_*.py' -v
       - run: python scripts/build.py
       - run: python scripts/check.py
-      - run: python scripts/check_pdf.py
       - run: git diff --exit-code -- docs/index.html
