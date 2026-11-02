@@ -3,10 +3,7 @@
 *.py linguist-detectable=false linguist-generated=true linguist-vendored=true
 *.yaml linguist-detectable=false
 *.yml linguist-detectable=false
-*.toml linguist-detectable=false
 requirements.txt linguist-detectable=false
-scripts/book.css linguist-detectable=false
-scripts/landing.html linguist-detectable=false
 examples/** linguist-detectable=false
 projects/** linguist-detectable=false
 tests/** linguist-detectable=false
@@ -19,7 +16,6 @@ docs/assets/landing.js linguist-generated=false
 
 # Source-of-publication files are necessary tooling, not the website implementation.
 scripts/** linguist-detectable=false
-.github/** linguist-detectable=false
 
 docs/book/index.html linguist-generated=false
 docs/assets/reader.css linguist-generated=false
