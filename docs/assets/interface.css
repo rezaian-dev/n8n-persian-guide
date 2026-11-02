@@ -23,3 +23,9 @@ body.publication-home,body.publication-reader{background:radial-gradient(ellipse
 @media(max-width:900px){html:not(.drawer-ready) .publication-home .site-header .header-inner{flex-wrap:wrap}html:not(.drawer-ready) .publication-home #primary-nav{display:flex;flex-wrap:wrap;flex-basis:100%;order:5;gap:8px;justify-content:flex-start}html:not(.drawer-ready) .publication-home #primary-nav a{min-height:44px}}
 .publication-home .editorial-frame{color:var(--ink)}.publication-home .tiny-label,.publication-home .art-heading p,.publication-home .frame-top,.publication-home .frame-bottom b{color:var(--muted)}.publication-home .art-heading h2 em,.publication-home .frame-top>b,.publication-home .frame-bottom span{color:var(--accent)}.publication-home .frame-bottom{border-color:var(--line)}.publication-home .frame-bottom>a{color:var(--accent);border-color:var(--glass-border);background:var(--soft)}
 html:has(.publication-reader){scroll-behavior:auto}
+
+/* One font for every textual UI element, including Latin/Persian digits and controls. */
+@font-face{font-family:"Publication Vazirmatn";src:url("Vazirmatn.woff2?v=uniform1") format("woff2");font-style:normal;font-weight:100 900;font-display:swap}
+html,body,body *,body *::before,body *::after,body *::marker,body input::placeholder,body textarea::placeholder,body input::file-selector-button{font-family:"Publication Vazirmatn",sans-serif!important}
+html,body{--font-sans:"Publication Vazirmatn",sans-serif!important;--font-mono:"Publication Vazirmatn",sans-serif!important;--font-vazirmatn:"Publication Vazirmatn"!important;--font-jetbrains:"Publication Vazirmatn"!important}
+code,pre,kbd,samp{font-variant-ligatures:none}output,input[type=number],.tabular-nums{font-variant-numeric:tabular-nums}
